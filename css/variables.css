@@ -1,0 +1,146 @@
+/* 
+  ====================================
+  CSS VARIABLES - Tema & Design System
+  ====================================
+*/
+
+:root {
+    /* Primary Colors */
+    --primary-green: #00A86B;
+    --primary-blue: #4169E1;
+    --primary-blue-light: #5B7FE8;
+    
+    /* Gradient */
+    --gradient-primary: linear-gradient(135deg, #00A86B 0%, #4169E1 100%);
+    --gradient-reverse: linear-gradient(135deg, #4169E1 0%, #00A86B 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(0, 168, 107, 0.1) 0%, rgba(65, 105, 225, 0.1) 100%);
+    
+    /* Neutral Colors */
+    --bg-dark: #0f1419;
+    --bg-darker: #0a0e12;
+    --bg-card: #1a1f28;
+    --text-light: #e8e8e8;
+    --text-muted: #a8a8a8;
+    --text-dark: #2a2f36;
+    
+    /* Accent Colors */
+    --accent-yellow: #FFB84D;
+    --accent-gold: #BBCB2E;
+    --accent-pink: #FF6B9D;
+    --accent-purple: #9B59B6;
+    
+    /* Semantic Colors */
+    --success: #00A86B;
+    --warning: #FFB84D;
+    --error: #FF6B6B;
+    --info: #4169E1;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.2);
+    --shadow-glow-green: 0 0 20px rgba(0, 168, 107, 0.3);
+    --shadow-glow-blue: 0 0 20px rgba(65, 105, 225, 0.3);
+    
+    /* Spacing Scale (8px base) */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+    
+    --fs-xs: 12px;
+    --fs-sm: 14px;
+    --fs-base: 16px;
+    --fs-lg: 18px;
+    --fs-xl: 20px;
+    --fs-2xl: 24px;
+    --fs-3xl: 32px;
+    --fs-4xl: 40px;
+    --fs-5xl: 48px;
+    
+    --fw-light: 300;
+    --fw-normal: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    
+    /* Line Heights */
+    --lh-tight: 1.2;
+    --lh-snug: 1.4;
+    --lh-normal: 1.6;
+    --lh-relaxed: 1.8;
+    
+    /* Letter Spacing */
+    --ls-tight: -0.5px;
+    --ls-normal: 0px;
+    --ls-wide: 0.5px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 300ms ease-in-out;
+    --transition-slow: 500ms ease-in-out;
+    
+    /* Z-index */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal: 400;
+    --z-tooltip: 500;
+    
+    /* Container Widths */
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+    --container-2xl: 1320px;
+}
+
+/* Dark theme (default) */
+/* Auto: matches OS preference */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme='dark']) {
+        --bg-dark: #ffffff;
+        --bg-darker: #f0f2f5;
+        --bg-card: #ffffff;
+        --text-light: #1a1f28;
+        --text-muted: #5a6270;
+        --text-dark: #e8e8e8;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.12);
+    }
+}
+
+/* Manual light theme (set via JS toggle) */
+[data-theme='light'] {
+    --bg-dark: #ffffff;
+    --bg-darker: #f0f2f5;
+    --bg-card: #ffffff;
+    --text-light: #1a1f28;
+    --text-muted: #5a6270;
+    --text-dark: #e8e8e8;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.12);
+}
+
+/* Smooth theme transitions */
+*, *::before, *::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}

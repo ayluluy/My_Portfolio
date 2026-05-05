@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eylül Yılmaz — Yönetim Bilişim Sistemleri Öğrencisi, Portfolyo & Blog">
+    <meta name="theme-color" content="#E03F4F">
+    <meta property="og:title" content="Eylül Yılmaz">
+    <meta property="og:description" content="Yönetim Bilişim Sistemleri 3. sınıf öğrencisinin portfolyo ve blog sayfası">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/pneg" href="C:\Users\PC\Desktop\My_Portfolio\assets\images\yıldız.png"
+
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/pages.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Google Fonts: Cinzel Decorative (Kage stili) + Poppins + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <title>Eylül Yılmaz — Portfolyo</title>
+</head>
+<body>
+
+    <!-- Arka plan canvas animasyonu -->
+    <canvas id="canvas-animation" class="bg-canvas"></canvas>
+
+    <!-- Sağ kenar nokta navigasyonu -->
+    <nav class="side-nav" id="sideNav" aria-label="Bölüm navigasyonu">
+        <a class="side-dot active" href="#home"     data-target="home"     title="Anasayfa"></a>
+        <a class="side-dot"        href="#about"    data-target="about"    title="Hakkımda"></a>
+        <a class="side-dot"        href="#projects" data-target="projects" title="Projeler"></a>
+        <a class="side-dot"        href="#events"   data-target="events"   title="Etkinlikler"></a>
+        <a class="side-dot"        href="#blog"     data-target="blog"     title="Blog"></a>
+        <a class="side-dot"        href="#contact"  data-target="contact"  title="İletişim"></a>
+    </nav>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 1 — ANASAYFA (HERO)
+    ═══════════════════════════════════ -->
+    <section id="home" class="scroll-section hero-section">
+        <div class="hero-inner">
+
+            <!-- İsim bloğu — sağdan kayarak gelir -->
+            <div class="hero-name-block">
+                <h1 class="kage-name" id="heroName">
+                    <span class="kage-line kage-first">Eylül</span>
+                    <span class="kage-line kage-last">Yılmaz</span>
+                </h1>
+                <p class="hero-tagline" id="typewriter-target">Yönetim Bilişim Sistemleri Öğrencisi</p>
+                <div class="hero-actions">
+                    <a href="#about"   class="btn btn-primary  scroll-link">Keşfet</a>
+                    <a href="#contact" class="btn btn-secondary scroll-link">İletişim</a>
+                </div>
+            </div>
+
+            <!-- Animasyon / görsel alanı -->
+            <div class="hero-visual" id="heroVisual">
+                <div class="anim-frame">
+                    <!-- Kullanıcı kendi animasyonunu buraya ekleyecek -->
+                    <div class="anim-rings">
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                    </div>
+                    <p class="anim-hint">Animasyon burada<br>yer alacak ✨</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Aşağı kaydır ipucu -->
+        <div class="scroll-hint">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+            <span>Aşağı kaydır</span>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 2 — HAKKIMDA
+    ═══════════════════════════════════ -->
+    <section id="about" class="scroll-section about-section reveal-section">
+        <div class="section-inner">
+            <span class="section-num">01</span>
+            <h2 class="section-heading">Hakkımda</h2>
+
+            <div class="about-layout">
+                <!-- Fotoğraf / görsel alanı -->
+                <div class="about-visual">
+                    <div class="photo-frame">
+                        <img
+                            src="./assets/images/mypixelart1.png"
+                            alt="Eylül Yılmaz — Profil Fotoğrafı"
+                            class="profile-photo"
+                            onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'><span>📸</span><p>Fotoğraf<br>eklenecek</p></div>'"
+                        >
+                    </div>
+                </div>
+
+                <!-- Metin -->
+                <div class="about-text-block">
+                    <p class="about-bio">Merhaba! Ben <strong>Eylül Yılmaz</strong>, Yönetim Bilişim Sistemleri bölümünde 3. sınıf öğrencisiyim. Teknoloji ve tasarımın kesişim noktasında yer almayı seviyorum.</p>
+                    <p class="about-bio">Web geliştirme, özellikle interaktif arayüzler oluşturma konusunda tutkuluyum.</p>
+
+                    <div class="about-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Bölüm</span>
+                            <span class="meta-val">Yönetim Bilişim Sistemleri</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Sınıf</span>
+                            <span class="meta-val">3. Sınıf (Devam Ediyor)</span>
+                        </div>
+                    </div>
+
+                    <h3 class="skills-heading">Yetkinlikler</h3>
+                    <div class="skills-grid">
+                        <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-info"><span class="skill-name">HTML5 &amp; Semantic HTML</span><div class="skill-bar"><div class="skill-fill" data-level="92"></div></div></div></div>
+                        <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-info"><span class="skill-name">CSS3 — Flexbox, Grid, Animations</span><div class="skill-bar"><div class="skill-fill" data-level="88"></div></div></div></div>
+                        <div class="skill-card"><div class="skill-icon">⚡</div><div class="skill-info"><span class="skill-name">JavaScript — Vanilla JS &amp; DOM</span><div class="skill-bar"><div class="skill-fill" data-level="82"></div></div></div></div>
+                        <div class="skill-card"><div class="skill-icon">📱</div><div class="skill-info"><span class="skill-name">Responsive Design</span><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div></div>
+                        <div class="skill-card"><div class="skill-icon">🖼️</div><div class="skill-info"><span class="skill-name">SVG &amp; Canvas</span><div class="skill-bar"><div class="skill-fill" data-level="75"></div></div></div></div>
+                        <div class="skill-card"><div class="skill-icon">🐙</div><div class="skill-info"><span class="skill-name">Git &amp; GitHub</span><div class="skill-bar"><div class="skill-fill" data-level="78"></div></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 3 — PROJELER
+    ═══════════════════════════════════ -->
+    <section id="projects" class="scroll-section projects-section reveal-section">
+        <div class="section-inner">
+            <span class="section-num">02</span>
+            <h2 class="section-heading">Projeler</h2>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tümü</button>
+                <button class="filter-btn" data-filter="academic">Akademik</button>
+                <button class="filter-btn" data-filter="personal">Kişisel</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- JS tarafından doldurulur -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 4 — ETKİNLİKLER
+    ═══════════════════════════════════ -->
+    <section id="events" class="scroll-section events-section reveal-section">
+        <div class="section-inner">
+            <span class="section-num">03</span>
+            <h2 class="section-heading">Etkinlikler</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2026</div>
+                    <div class="timeline-content">
+                        <h3>Yazılım Tasarım Sempozyumu</h3>
+                        <p>Modern web tasarımı ve best practices konularında katıldığım ulusal sempozyum.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3>Hackathon 2025 Katılımı</h3>
+                        <p>24 saatlik yazılım geliştirme yarışması. Takım olarak bir web uygulaması geliştirdik.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3>Web Geliştirme Workshop'u</h3>
+                        <p>Advanced CSS ve JavaScript konularında eğitim programı.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h3>Üniversite Kodlama Yarışması</h3>
+                        <p>İkinci sıraya girerek başarı kazandım. JavaScript &amp; algoritma çözümü.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 5 — BLOG
+    ═══════════════════════════════════ -->
+    <section id="blog" class="scroll-section blog-section reveal-section">
+        <div class="section-inner">
+            <span class="section-num">04</span>
+            <h2 class="section-heading">Blog</h2>
+
+            <div class="blog-search">
+                <input type="text" id="blogSearch" class="search-input" placeholder="Yazıları ara...">
+            </div>
+
+            <div class="blog-posts" id="blogPosts">
+                <!-- JS tarafından doldurulur -->
+            </div>
+
+            <!-- Blog yazısı detay alanı (gizli başlar) -->
+            <div id="blog-post" class="blog-post-page hidden" data-page="blog-post">
+                <button class="back-btn" id="backToBlog">← Tüm Yazılar</button>
+                <article id="postContent"></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         BÖLÜM 6 — İLETİŞİM & GERİBİLDİRİM
+    ═══════════════════════════════════ -->
+    <section id="contact" class="scroll-section contact-section reveal-section">
+        <div class="section-inner">
+            <span class="section-num">05</span>
+            <h2 class="section-heading">Seninle Konuşalım</h2>
+            <p class="contact-intro">Kariyer, teknoloji, hobiler ya da sadece sohbet etmek için mesajını bekliyorum!</p>
+
+            <div class="contact-layout">
+                <!-- Form -->
+                <div class="contact-form-block">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Adınız</label>
+                            <input type="text" id="name" name="name" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" placeholder="ornek@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic">Konu</label>
+                            <select id="topic" name="topic">
+                                <option value="">Konu seçin...</option>
+                                <option value="kariyer">💼 Kariyer</option>
+                                <option value="teknoloji">💻 Teknoloji</option>
+                                <option value="tasarim">🎨 Tasarım</option>
+                                <option value="hobi">🎯 Hobi</option>
+                                <option value="elestiri">🌟 Eleştiri / Geribildirim</option>
+                                <option value="proje">🚀 Proje İş Birliği</option>
+                                <option value="diger">💬 Diğer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesaj</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Merhaba Eylül, seninle ... hakkında konuşmak istiyorum." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Gönder 🚀</button>
+                    </form>
+                </div>
+
+                <!-- Konu etiketleri + sosyal -->
+                <div class="contact-side">
+                    <h3>Ne hakkında konuşabiliriz?</h3>
+                    <div class="topic-chips">
+                        <span class="chip">💼 Kariyer</span>
+                        <span class="chip">💻 Teknoloji</span>
+                        <span class="chip">🎨 Tasarım</span>
+                        <span class="chip">🎯 Hobi</span>
+                        <span class="chip">📚 Eğitim</span>
+                        <span class="chip">🚀 Proje</span>
+                        <span class="chip">✍️ Yazarlık</span>
+                        <span class="chip">🌟 Eleştiri</span>
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">Bul Beni</h3>
+                    <div class="footer-social">
+                        <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-link" aria-label="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener" class="footer-social-link" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">Eylül Yılmaz</span>
+                <p class="footer-tagline">Modern tasarım, interaktif animasyonlar<br>ve fark yaratan projelerle.</p>
+                <div class="footer-social">
+                    <a href="https://github.com"   target="_blank" rel="noopener" class="footer-social-link" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://twitter.com"  target="_blank" rel="noopener" class="footer-social-link" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4 class="footer-heading">Bölümler</h4>
+                <ul>
+                    <li><a href="#home"     class="scroll-link">Anasayfa</a></li>
+                    <li><a href="#about"    class="scroll-link">Hakkımda</a></li>
+                    <li><a href="#projects" class="scroll-link">Projeler</a></li>
+                    <li><a href="#events"   class="scroll-link">Etkinlikler</a></li>
+                    <li><a href="#blog"     class="scroll-link">Blog</a></li>
+                    <li><a href="#contact"  class="scroll-link">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4 class="footer-heading">İletişim</h4>
+                <ul>
+                    <li><a href="eyllyimaz853@gmail.com">📧 Gmail
+                        <title>Gmail'e gider</title></a></li>
+                    <li><a href="https://github.com"   target="_blank" rel="noopener">🐙 GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/aylul01/" target="_blank" rel="noopener">💼 LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Eylül Yılmaz</strong>. Tüm hakları saklıdır.</p>
+            <p class="footer-made">💚 ile yapıldı &mdash; HTML, CSS &amp; JavaScript</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/config.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/theme.js"></script>
+    <script src="./js/blog.js"></script>
+    <script src="./js/projects.js"></script>
+    <script src="./js/animations.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
