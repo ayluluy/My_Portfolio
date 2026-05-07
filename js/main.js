@@ -222,6 +222,33 @@ function setupHeroButtons() {
     }
 }
 
+function setupCvMenu() {
+    const menu = document.getElementById('cvMenu');
+    const toggle = document.getElementById('cvMenuToggle');
+    if (!menu || !toggle) return;
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = !menu.classList.contains('open');
+        menu.classList.toggle('open', willOpen);
+        toggle.setAttribute('aria-expanded', String(willOpen));
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) {
+            menu.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            menu.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
 /* ──────────────────────────────────
    10. PROJELER — FİLTRE
 ────────────────────────────────── */
@@ -240,7 +267,151 @@ function setupProjectFilter() {
 }
 
 /* ──────────────────────────────────
-   10. VERİ YÜKLEMESİ
+   11. HAMBURGER MENÜ
+────────────────────────────────── */
+function setupHamburgerMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const topNav = document.querySelector('.top-nav');
+    if (!hamburger || !topNav) return;
+
+    const closeMenu = () => {
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+    };
+
+    const openMenu = () => {
+        hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+    };
+
+    hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.contains('active');
+        if (isOpen) closeMenu();
+        else openMenu();
+    });
+
+    topNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!document.body.classList.contains('menu-open')) return;
+        if (e.target.closest('.top-nav') || e.target.closest('#hamburger')) return;
+        closeMenu();
+    });
+
+}
+
+/* ──────────────────────────────────
+   12. CUSTOM CURSOR
+────────────────────────────────── */
+function setupCustomCursor() {
+    const cursor = document.querySelector('.cursor');
+    if (!cursor || isTouchDevice()) return;
+
+    const show = () => cursor.classList.add('is-active');
+    const hide = () => cursor.classList.remove('is-active');
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+    });
+
+    document.addEventListener('mouseenter', show);
+    document.addEventListener('mouseleave', hide);
+}
+
+/* ──────────────────────────────────
+   13. HERO LOTTIE
+────────────────────────────────── */
+function setupHeroLottie() {
+    const container = document.getElementById('heroLottie');
+    if (!container || !window.lottie) return;
+
+    try {
+        window.lottie.loadAnimation({
+            container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: './assets/lottie/hero.json'
+        });
+
+        container.closest('.anim-frame')?.classList.add('has-lottie');
+    } catch (error) {
+        console.warn('Lottie animation failed to load:', error);
+    }
+}
+
+/* ──────────────────────────────────
+   15. HİKAYE MODU CV
+────────────────────────────────── */
+function setupStoryCv() {
+    const steps = document.querySelectorAll('#storyCvTimeline [data-step]');
+    if (!steps.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-active');
+            }
+        });
+    }, { threshold: 0.45 });
+
+    steps.forEach((step) => observer.observe(step));
+}
+
+/* ──────────────────────────────────
+   16. DİNAMİK AMBIENT TEMA
+────────────────────────────────── */
+function setupDynamicAmbientTheme() {
+    const body = document.body;
+    if (!body) return;
+    const toneClasses = ['ambient-morning', 'ambient-day', 'ambient-evening', 'ambient-night'];
+
+    const applyTone = (tone) => {
+        toneClasses.forEach((className) => body.classList.remove(className));
+        body.classList.add(tone);
+    };
+
+    const fromHour = (hour) => {
+        if (hour >= 6 && hour < 11) return 'ambient-morning';
+        if (hour >= 11 && hour < 17) return 'ambient-day';
+        if (hour >= 17 && hour < 21) return 'ambient-evening';
+        return 'ambient-night';
+    };
+
+    const now = new Date();
+    applyTone(fromHour(now.getHours()));
+
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,is_day&timezone=auto`;
+            const response = await fetch(url);
+            if (!response.ok) return;
+            const weather = await response.json();
+            const isDay = weather?.current?.is_day === 1;
+            applyTone(isDay ? fromHour(new Date().getHours()) : 'ambient-night');
+        } catch (_error) {
+            // Sessiz geç: fallback zaten saat bazlı çalışıyor.
+        }
+    }, () => {
+        // Konum izni verilmezse saat bazlı fallback kullanılır.
+    }, { maximumAge: 300000, timeout: 4000 });
+}
+
+/* ──────────────────────────────────
+   17. VERİ YÜKLEMESİ
 ────────────────────────────────── */
 async function loadData() {
     if (window.blogManager) {
@@ -266,6 +437,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupBlogToggle();
     setupHeroButtons();
     setupProjectFilter();
+    setupHamburgerMenu();
+    setupCustomCursor();
+    setupHeroLottie();
+    setupStoryCv();
+    setupDynamicAmbientTheme();
+    setupCvMenu();
     loadData();
 
     // Animasyon yöneticisi

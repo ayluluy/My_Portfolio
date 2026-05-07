@@ -109,7 +109,7 @@ class AnimationManager {
             pauseAfterDelete: 500
         });
     }
-    
+
     /**
      * Initialize Canvas Animation
      */

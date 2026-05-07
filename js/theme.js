@@ -39,19 +39,22 @@ class ThemeManager {
 
     /** Build the toggle button and inject into navbar */
     _buildToggle() {
-        const btn = document.createElement('button');
-        btn.id = 'themeToggle';
-        btn.className = 'theme-toggle-btn';
-        btn.title = 'Tema değiştir';
+        let btn = document.getElementById('themeToggle');
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.id = 'themeToggle';
+            btn.className = 'theme-toggle-btn';
+            btn.title = 'Tema değiştir';
+
+            // Insert before hamburger or at end of navbar-container
+            const container = document.querySelector('.navbar-container');
+            const hamburger = document.getElementById('hamburger');
+            if (container) {
+                container.insertBefore(btn, hamburger || null);
+            }
+        }
 
         btn.addEventListener('click', () => this.toggle());
-
-        // Insert before hamburger or at end of navbar-container
-        const container = document.querySelector('.navbar-container');
-        const hamburger = document.getElementById('hamburger');
-        if (container) {
-            container.insertBefore(btn, hamburger || null);
-        }
 
         // Apply initial icon
         this._apply(this.theme);

@@ -79,9 +79,16 @@ class ProjectManager {
     renderProjects() {
         const container = $('#projectsGrid');
         if (!container) return;
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
         
         if (this.filteredProjects.length === 0) {
-            container.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Henüz proje yok.</p>';
+            container.innerHTML = `
+                <div class="empty-state-card" role="status" aria-live="polite">
+                    <div class="empty-state-icon">🚀</div>
+                    <h3>${isEnglish ? 'Awesome projects are coming soon' : 'Çok yakında burada harika projeler olacak'}</h3>
+                    <p>${isEnglish ? 'I am currently building the infrastructure and content. This section will update automatically as new projects are added.' : 'Şu an altyapı ve içerik geliştirme aşamasındayım. Yeni projeler eklendikçe bu alan otomatik güncellenecek.'}</p>
+                </div>
+            `;
             return;
         }
         

@@ -156,9 +156,18 @@
         gap: var(--space-md);
     }
     
-    .blog-posts {
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
+    .blog-heading-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    
+    .blog-carousel-controls {
+        align-self: flex-end;
+    }
+    
+    .medium-card {
+        width: 210px;
+        min-width: 210px;
     }
     
     /* About Section */

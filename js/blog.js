@@ -12,6 +12,12 @@ class BlogManager {
         this.itemsPerPage = CONFIG.blog.postsPerPage;
         this.searchQuery = '';
         this.selectedCategory = 'all';
+        this.autoScrollTimer = null;
+        this.autoScrollDirection = 1;
+        this.autoScrollInterval = 1800;
+        this.singleLoopWidth = 0;
+        this.cardStep = 240;
+        this.resumeTimer = null;
         
         this.init();
     }
@@ -35,6 +41,16 @@ class BlogManager {
                 this.filterPosts();
                 this.renderBlogList();
             });
+        }
+
+        const prevBtn = $('#blogPrev');
+        const nextBtn = $('#blogNext');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.nudgeCarousel(-1));
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.nudgeCarousel(1));
         }
     }
     
@@ -91,26 +107,32 @@ class BlogManager {
      */
     renderBlogList() {
         const container = $('#blogPosts');
-        if (!container) return;
+        if (!container) return;        
         
         if (this.filteredPosts.length === 0) {
-            container.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Henüz blog yazısı yok.</p>';
+            const placeholders = Array.from({ length: 6 }).map((_, i) => `
+                <div class="blog-card medium-card medium-placeholder" aria-hidden="true" style="--i:${i}">
+                    <div class="medium-card-content">Yazı yakında</div>
+                </div>
+            `).join('');
+            container.innerHTML = placeholders + placeholders;
+            this.initializeCarousel();
+            this.bindCardHoverEvents();
             return;
         }
         
-        // Get paginated posts
-        const start = (this.currentPage - 1) * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
-        const paginatedPosts = this.filteredPosts.slice(start, end);
+        const postsSorted = [...this.filteredPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        // Render posts
-        container.innerHTML = paginatedPosts.map(post => this.createPostCard(post)).join('');
+        const baseCards = postsSorted.map((post, idx) => this.createPostCard(post, idx)).join('');
+        container.innerHTML = baseCards + baseCards;
+        this.initializeCarousel();
+        this.bindCardHoverEvents();
         
-        // Add click listeners
-        $$('.blog-card').forEach((card, index) => {
+        $$('.medium-card[data-post-id]').forEach((card) => {
             card.addEventListener('click', () => {
-                const post = paginatedPosts[index];
-                this.showPostDetail(post);
+                const postId = Number(card.dataset.postId);
+                const post = this.getPostById(postId);
+                if (post) this.showPostDetail(post);
             });
         });
     }
@@ -118,25 +140,123 @@ class BlogManager {
     /**
      * Create Post Card HTML
      */
-    createPostCard(post) {
+    createPostCard(post, idx = 0) {
         const date = formatDate(post.date);
+        const preview = (post.excerpt || '').slice(0, 80).trim();
         
         return `
-            <div class="blog-card">
-                <div class="blog-featured">${post.featured_image || '📝'}</div>
-                <div class="blog-body">
+            <div class="blog-card medium-card" data-post-id="${post.id}" style="--i:${idx}">
+                <div class="medium-card-content">
+                    <h3>${post.title}</h3>
+                    <p>${preview}${preview.length >= 80 ? '...' : ''}</p>
                     <div class="blog-meta">
                         <span>${date}</span>
-                        <span class="reading-time">${post.reading_time} dakika</span>
-                    </div>
-                    <h3>${post.title}</h3>
-                    <p class="blog-excerpt">${post.excerpt}</p>
-                    <div class="blog-tags">
-                        ${(post.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
                 </div>
             </div>
         `;
+    }
+
+    initializeCarousel() {
+        const carousel = $('#blogCarousel');
+        const track = $('#blogPosts');
+        if (!carousel || !track) return;
+
+        this.singleLoopWidth = track.scrollWidth / 2;
+        if (!this.singleLoopWidth) return;
+        const firstCard = track.querySelector('.medium-card');
+        if (firstCard) {
+            const styles = window.getComputedStyle(track);
+            const gap = Number.parseFloat(styles.columnGap || styles.gap || '0');
+            this.cardStep = firstCard.getBoundingClientRect().width + gap;
+        }
+
+        carousel.scrollLeft = 0;
+        this.updateActiveCard();
+        this.startAutoScroll();
+    }
+
+    startAutoScroll() {
+        const carousel = $('#blogCarousel');
+        if (!carousel || this.autoScrollTimer) return;
+
+        this.autoScrollTimer = setInterval(() => {
+            this.shiftByStep(this.autoScrollDirection, true);
+        }, this.autoScrollInterval);
+    }
+
+    stopAutoScroll() {
+        if (!this.autoScrollTimer) return;
+        clearInterval(this.autoScrollTimer);
+        this.autoScrollTimer = null;
+    }
+
+    nudgeCarousel(direction) {
+        this.stopAutoScroll();
+        this.autoScrollDirection = direction >= 0 ? 1 : -1;
+        this.shiftByStep(this.autoScrollDirection, true);
+
+        clearTimeout(this.resumeTimer);
+        this.resumeTimer = setTimeout(() => this.startAutoScroll(), 1200);
+    }
+
+    shiftByStep(direction, smooth = false) {
+        const carousel = $('#blogCarousel');
+        if (!carousel || !this.singleLoopWidth) return;
+
+        const nextLeft = carousel.scrollLeft + (direction * this.cardStep);
+        carousel.scrollTo({
+            left: nextLeft,
+            behavior: smooth ? 'smooth' : 'auto'
+        });
+
+        setTimeout(() => {
+            if (carousel.scrollLeft >= this.singleLoopWidth) {
+                carousel.scrollLeft -= this.singleLoopWidth;
+            } else if (carousel.scrollLeft < 0) {
+                carousel.scrollLeft += this.singleLoopWidth;
+            }
+            this.updateActiveCard();
+        }, smooth ? 320 : 0);
+    }
+
+    bindCardHoverEvents() {
+        $$('.medium-card').forEach((card) => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('is-hovered');
+                this.stopAutoScroll();
+                this.updateActiveCard(card);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('is-hovered');
+                this.updateActiveCard();
+                this.startAutoScroll();
+            });
+        });
+    }
+
+    updateActiveCard(forceCard = null) {
+        const carousel = $('#blogCarousel');
+        const cards = $$('.medium-card');
+        if (!carousel || cards.length === 0) return;
+
+        cards.forEach((card) => card.classList.remove('is-active'));
+
+        const carouselRect = carousel.getBoundingClientRect();
+        const viewCenter = carouselRect.left + (carouselRect.width / 2);
+        const targetCard = forceCard || cards.reduce((closest, card) => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const distance = Math.abs(cardCenter - viewCenter);
+
+            if (!closest || distance < closest.distance) {
+                return { card, distance };
+            }
+            return closest;
+        }, null)?.card;
+
+        if (targetCard) targetCard.classList.add('is-active');
     }
     
     /**

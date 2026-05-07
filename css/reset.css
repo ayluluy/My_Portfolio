@@ -16,16 +16,34 @@ html {
 
 body {
     font-family: var(--font-primary);
-    background-image: url('../assets/images/indir (1).jpg');
-    background-size: cover;
+    background-color: var(--page-bg-color);
+    background-image:
+        linear-gradient(var(--page-grid-line-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--page-grid-line-color) 1px, transparent 1px),
+        radial-gradient(var(--page-dot-color) 0.8px, transparent 0.8px);
+    background-size: 42px 42px, 42px 42px, 14px 14px;
     background-attachment: fixed;
-    background-position: center;
+    background-position: 0 0;
     color: var(--text-light);
     font-size: var(--fs-base);
     line-height: var(--lh-normal);
     font-weight: var(--fw-normal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 10% 20%, var(--ambient-tint), transparent 55%),
+        radial-gradient(circle at 90% 80%, var(--ambient-tint), transparent 60%);
+    filter: blur(var(--ambient-blur));
+    transition: background 0.6s ease, filter 0.6s ease;
 }
 
 /* Headings */
@@ -81,7 +99,7 @@ a {
 
 a:hover {
     color: var(--primary-blue);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 a:focus {
@@ -249,4 +267,32 @@ textarea {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+}
+
+/* Global text color override */
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, li, a, strong, em, small,
+label, input, textarea, select, button,
+.meta-label, .meta-val, .section-num, .section-heading,
+.nav-link, .top-brand, .hero-tagline, .anim-hint,
+.skills-heading, .skill-name, .chip,
+.footer-heading, .footer-tagline, .footer-bottom p,
+.blog-meta, .reading-time, .post-meta, .back-btn {
+    color: var(--text-light) !important;
+}
+
+/* Keep decorative gradient text readable in current theme */
+.kage-line,
+.logo-text,
+.footer-logo,
+.gradient-text,
+.gradient-text-animated,
+.section-heading .highlight,
+article h1 {
+    background: none !important;
+    -webkit-text-fill-color: var(--text-light) !important;
+    color: var(--text-light) !important;
+    text-shadow: none !important;
+    filter: none !important;
 }
