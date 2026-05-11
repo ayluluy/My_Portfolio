@@ -67,7 +67,7 @@
             footerTagline: 'Modern tasarım, interaktif animasyonlar<br>ve fark yaratan projelerle.',
             footerSections: 'Bölümler',
             footerContact: 'İletişim',
-            footerMade: '💚 ile yapıldı — HTML, CSS & JavaScript',
+            footerMade: 'Web Tasarım projesi için yapıldı',
             footerRights: '&copy; 2026 <strong>Eylül Yılmaz</strong>. Tüm hakları saklıdır.'
         },
         en: {
@@ -128,7 +128,7 @@
             footerTagline: 'With modern design, interactive animations<br>and projects that make a difference.',
             footerSections: 'Sections',
             footerContact: 'Contact',
-            footerMade: '💚 made with — HTML, CSS & JavaScript',
+            footerMade: 'Made for Web Design project',
             footerRights: '&copy; 2026 <strong>Eylül Yılmaz</strong>. All rights reserved.'
         }
     };

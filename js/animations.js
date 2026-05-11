@@ -160,11 +160,11 @@ class AnimationManager {
             this.particles.push({
                 x: Math.random() * this.canvas.width,
                 y: Math.random() * this.canvas.height,
-                radius: Math.random() * 2 + 1,
-                velocityX: (Math.random() - 0.5) * 2,
-                velocityY: (Math.random() - 0.5) * 2,
-                color: Math.random() > 0.5 ? CONFIG.colors.primary : CONFIG.colors.primaryBlue,
-                opacity: Math.random() * 0.5 + 0.3,
+                radius: Math.random() * 2.5 + 0.8,
+                velocityX: (Math.random() - 0.5) * 1.2,
+                velocityY: (Math.random() - 0.5) * 1.2,
+                color: '#c56bff', // Mor renk
+                opacity: Math.random() * 0.6 + 0.5, // Daha parlak
                 life: 1
             });
         }
@@ -215,19 +215,29 @@ class AnimationManager {
      * Draw Gradient Background
      */
     drawGradientBg() {
-        const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-        gradient.addColorStop(0, 'rgba(0, 168, 107, 0.05)');
-        gradient.addColorStop(0.5, 'rgba(65, 105, 225, 0.05)');
-        gradient.addColorStop(1, 'rgba(0, 168, 107, 0.05)');
-        
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // Transparent - background.png görünsün
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
     
     /**
      * Draw Single Particle
      */
     drawParticle(particle) {
+        // Glow efekti
+        const glowGradient = this.ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.radius * 3
+        );
+        glowGradient.addColorStop(0, particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0'));
+        glowGradient.addColorStop(1, particle.color + '00');
+        
+        this.ctx.fillStyle = glowGradient;
+        this.ctx.beginPath();
+        this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.closePath();
+        
+        // Ana nokta
         this.ctx.beginPath();
         this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         this.ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
@@ -239,25 +249,9 @@ class AnimationManager {
      * Draw Connections Between Particles
      */
     drawConnections() {
-        const maxDistance = 150;
-        
-        for (let i = 0; i < this.particles.length; i++) {
-            for (let j = i + 1; j < this.particles.length; j++) {
-                const dx = this.particles[i].x - this.particles[j].x;
-                const dy = this.particles[i].y - this.particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < maxDistance) {
-                    this.ctx.beginPath();
-                    this.ctx.strokeStyle = `rgba(0, 168, 107, ${0.2 * (1 - distance / maxDistance)})`;
-                    this.ctx.lineWidth = 1;
-                    this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-                    this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                    this.ctx.stroke();
-                    this.ctx.closePath();
-                }
-            }
-        }
+        // Bağlantı çizgileri devre dışı - sadece noktalar görsün
+        return;
+    }
     }
     
     /**

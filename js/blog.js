@@ -88,13 +88,16 @@ class BlogManager {
      */
     filterPosts() {
         this.filteredPosts = this.posts.filter(post => {
+            const title = post.title || '';
+            const excerpt = post.excerpt || '';
+            const category = post.category || 'medium';
             const matchesSearch = !this.searchQuery ||
-                post.title.toLowerCase().includes(this.searchQuery) ||
-                post.excerpt.toLowerCase().includes(this.searchQuery) ||
+                title.toLowerCase().includes(this.searchQuery) ||
+                excerpt.toLowerCase().includes(this.searchQuery) ||
                 (post.tags && post.tags.some(tag => tag.toLowerCase().includes(this.searchQuery)));
             
             const matchesCategory = this.selectedCategory === 'all' ||
-                post.category.toLowerCase() === this.selectedCategory.toLowerCase();
+                category.toLowerCase() === this.selectedCategory.toLowerCase();
             
             return matchesSearch && matchesCategory;
         });
@@ -110,21 +113,10 @@ class BlogManager {
         if (!container) return;        
         
         if (this.filteredPosts.length === 0) {
-            const placeholders = Array.from({ length: 6 }).map((_, i) => `
-                <div class="blog-card medium-card medium-placeholder" aria-hidden="true" style="--i:${i}">
-                    <div class="medium-card-content">Yazı yakında</div>
-                </div>
-            `).join('');
-            container.innerHTML = placeholders + placeholders;
-            this.initializeCarousel();
-            this.bindCardHoverEvents();
-            return;
+            this.filteredPosts = this.getFallbackPosts();
         }
-        
-        const postsSorted = [...this.filteredPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        const baseCards = postsSorted.map((post, idx) => this.createPostCard(post, idx)).join('');
-        container.innerHTML = baseCards + baseCards;
+        const cards = this.filteredPosts.map((post, idx) => this.createPostCard(post, idx)).join('');
+        container.innerHTML = cards + cards;
         this.initializeCarousel();
         this.bindCardHoverEvents();
         
@@ -132,7 +124,13 @@ class BlogManager {
             card.addEventListener('click', () => {
                 const postId = Number(card.dataset.postId);
                 const post = this.getPostById(postId);
-                if (post) this.showPostDetail(post);
+                if (post) this.openPostDetail(post);
+            });
+        });
+
+        $$('.medium-read-link').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         });
     }
@@ -141,20 +139,47 @@ class BlogManager {
      * Create Post Card HTML
      */
     createPostCard(post, idx = 0) {
-        const date = formatDate(post.date);
-        const preview = (post.excerpt || '').slice(0, 80).trim();
+        const preview = (post.excerpt || '').slice(0, 95).trim();
+        const postUrl = post.url || post.medium_url || 'https://medium.com/@eyllylmaz_66080';
         
         return `
             <div class="blog-card medium-card" data-post-id="${post.id}" style="--i:${idx}">
+                <div class="medium-card-cover">
+                    ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title} görseli">` : '✍️'}
+                </div>
                 <div class="medium-card-content">
                     <h3>${post.title}</h3>
                     <p>${preview}${preview.length >= 80 ? '...' : ''}</p>
-                    <div class="blog-meta">
-                        <span>${date}</span>
-                    </div>
+                    <a class="medium-read-link" href="${postUrl}" target="_blank" rel="noopener">Yazıya Git</a>
                 </div>
             </div>
         `;
+    }
+
+    getFallbackPosts() {
+        return [
+            {
+                id: 1,
+                title: 'Yapay zekanın yapamayıp insanların yapabileceği şeyler nelerdir?',
+                excerpt: 'Kısa özet daha sonra eklenecek.',
+                featured_image: './assets/images/medium1.png',
+                url: 'https://medium.com/@eyllylmaz_66080'
+            },
+            {
+                id: 2,
+                title: 'Ülkemizdeki İmkansız (Görünen) Girişimci Olmak',
+                excerpt: 'Kısa özet daha sonra eklenecek.',
+                featured_image: './assets/images/medium2.png',
+                url: 'https://medium.com/@eyllylmaz_66080'
+            },
+            {
+                id: 3,
+                title: 'Yapay Zekadan Ayrışan, İnsan Özgü',
+                excerpt: 'Kısa özet daha sonra eklenecek.',
+                featured_image: './assets/images/medium3.png',
+                url: 'https://medium.com/@eyllylmaz_66080'
+            }
+        ];
     }
 
     initializeCarousel() {

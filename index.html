@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     <meta name="twitter:title" content="Eylül Yılmaz">
     <meta name="twitter:description" content="Portfolyo, projeler ve blog yazıları.">
     <meta name="twitter:image" content="https://eylul-yilmaz.github.io/assets/images/og-cover.png">
-    <link rel="icon" type="image/webp" href="./assets/images/Lilo%20And%20Stitch%20Stitch%20Head-free%20Download%20PNG%20Transparent%20With%20Clear%20Background%20ID%2086772%20_%20TopPNG.webp">
+    <link rel="icon" type="image/png" href="./assets/images/web_icon.png">
 
     
     <!-- CSS -->
@@ -49,6 +49,7 @@
                 <a href="#home" class="nav-link scroll-link">Anasayfa</a>
                 <a href="#about" class="nav-link scroll-link">Hakkımda</a>
                 <a href="#projects" class="nav-link scroll-link">Projeler</a>
+                <a href="#recommendations" class="nav-link scroll-link">Öneriler</a>
                 <a href="#blog" class="nav-link scroll-link">Medium Yazıları</a>
                 <a href="#contact" class="nav-link scroll-link">İletişim</a>
                 <div class="cv-menu" id="cvMenu">
@@ -57,7 +58,7 @@
                     </button>
                     <div class="cv-menu-dropdown" id="cvMenuDropdown">
                         <a href="./Eylül Cv.pdf" class="cv-option" id="cvOptionTr" download="Eylul-Yilmaz-CV-TR.pdf">Türkçe CV</a>
-                        <a href="./Eylul-CV-EN.pdf" class="cv-option" id="cvOptionEn" download="Eylul-Yilmaz-CV-EN.pdf">English CV</a>
+                        <a href="./assets/images/Eyl%C3%BCl_Y%C4%B1lmaz_CV.pdf" class="cv-option" id="cvOptionEn" target="_blank" rel="noopener">English CV</a>
                     </div>
                 </div>
             </nav>
@@ -76,12 +77,13 @@
 
     <!-- Sağ kenar nokta navigasyonu -->
     <nav class="side-nav" id="sideNav" aria-label="Bölüm navigasyonu">
-        <a class="side-dot active" href="#home"     data-target="home"     title="Anasayfa"></a>
-        <a class="side-dot"        href="#about"    data-target="about"    title="Hakkımda"></a>
-        <a class="side-dot"        href="#projects" data-target="projects" title="Projeler"></a>
-        <a class="side-dot"        href="#events"   data-target="events"   title="Etkinlikler"></a>
-        <a class="side-dot"        href="#blog"     data-target="blog"     title="Medium Yazıları"></a>
-        <a class="side-dot"        href="#contact"  data-target="contact"  title="İletişim"></a>
+        <a class="side-dot active" href="#home"            data-target="home"            title="Anasayfa"></a>
+        <a class="side-dot"        href="#about"           data-target="about"           title="Hakkımda"></a>
+        <a class="side-dot"        href="#projects"        data-target="projects"        title="Projeler"></a>
+        <a class="side-dot"        href="#events"          data-target="events"          title="Etkinlikler"></a>
+        <a class="side-dot"        href="#blog"            data-target="blog"            title="Medium Yazıları"></a>
+        <a class="side-dot"        href="#recommendations" data-target="recommendations" title="Öneriler"></a>
+        <a class="side-dot"        href="#contact"         data-target="contact"         title="İletişim"></a>
     </nav>
 
     <!-- ═══════════════════════════════════
@@ -105,16 +107,7 @@
 
             <!-- Animasyon / görsel alanı -->
             <div class="hero-visual" id="heroVisual">
-                <div class="anim-frame">
-                    <div id="heroLottie" class="hero-lottie" aria-label="Hero animasyonu"></div>
-                    <!-- Gelecek animasyon alanı -->
-                    <div class="anim-rings">
-                        <div class="ring ring-1"></div>
-                        <div class="ring ring-2"></div>
-                        <div class="ring ring-3"></div>
-                    </div>
-                    <p class="anim-hint">İnteraktif gösterim<br>çok yakında burada</p>
-                </div>
+                    <img src="./assets/images/pixel.png" alt="Eylül Yılmaz — Portresi" class="hero-pixel-art">
             </div>
 
         </div>
@@ -134,7 +127,7 @@
                 <div class="about-visual">
                     <div class="photo-frame">
                         <img
-                            src="./assets/images/mypixelart.png"
+                            src="./assets/images/yoruldum.png"
                             alt="Eylül Yılmaz — Profil Fotoğrafı"
                             class="profile-photo"
                             onerror="this.parentElement.innerHTML='<div class=\'photo-placeholder\'><span>✨</span><p>Portre görseli<br>yakında burada</p></div>'"
@@ -208,28 +201,52 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">2024+</div>
-                    <div class="timeline-content">
+                    <div
+                        class="timeline-content timeline-content-clickable"
+                        data-event-id="firat-hsd"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Fırat Üniversitesi HSD etkinlik detayını aç"
+                    >
                         <h3>Fırat Üniversitesi HSD — Başkan Yardımcısı</h3>
                         <p>Kulüp koordinasyonu, etkinlik/sponsorluk süreçleri ve kurumlar arası iletişim yönetimi.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Staj</div>
-                    <div class="timeline-content">
+                    <div
+                        class="timeline-content timeline-content-clickable"
+                        data-event-id="desa-it-staj"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Desa Deri IT stajı detayını aç"
+                    >
                         <h3>Desa Deri — IT Stajyeri</h3>
                         <p>Ağ/sunucu sistemlerinde teknik destek, yazılım kurulumu ve veri entegrasyonu süreçleri.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Araştırma</div>
-                    <div class="timeline-content">
+                    <div
+                        class="timeline-content timeline-content-clickable"
+                        data-event-id="tubitak-2209a-arastirma"
+                        role="button"
+                        tabindex="0"
+                        aria-label="TÜBİTAK 2209-A araştırma projesi detayını aç"
+                    >
                         <h3>TÜBİTAK 2209-A Araştırma Projesi</h3>
                         <p>Türk işaret dili jestlerini tanıyan yapay zeka modelinde veri hazırlama ve modelleme çalışmaları.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Sosyal Etki</div>
-                    <div class="timeline-content">
+                    <div
+                        class="timeline-content timeline-content-clickable"
+                        data-event-id="sosyal-etki-gonulluluk"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Gönüllülük ve gençlik projeleri detayını aç"
+                    >
                         <h3>Gönüllülük ve Gençlik Projeleri</h3>
                         <p>İpek Yolu Afet Gönüllüleri, KA154 Erasmus+ ve T3 Vakfı kapsamında aktif katılım.</p>
                     </div>
@@ -239,35 +256,221 @@
     </section>
 
     <!-- ═══════════════════════════════════
-         BÖLÜM 4.5 — HİKAYE MODU CV
+         BÖLÜM 4.5 — ÖNERİLER (KİTAP, BELGESEL, FİLM)
     ═══════════════════════════════════ -->
-    <section id="story-cv" class="scroll-section story-cv-section reveal-section" aria-labelledby="story-cv-title">
+    <section id="recommendations" class="scroll-section recommendations-section reveal-section" aria-labelledby="recommendations-title">
         <div class="section-inner">
             <span class="section-num">03A</span>
-            <h2 class="section-heading" id="story-cv-title">Hikaye Modu CV</h2>
-            <p class="story-cv-intro" id="story-cv-intro">Kaydırdıkça kariyer hikayem zaman çizelgesi gibi canlanır.</p>
+            <h2 class="section-heading" id="recommendations-title">Kitap, Belgesel & Film Önerileri</h2>
+            
+            <div class="recommendations-container">
+                <!-- KİTAPLAR -->
+                <article class="story-step story-step-clickable" data-step data-recommendations-id="books" role="button" tabindex="0" aria-label="Kitaplar detayını aç">
+                    <span class="story-year">📚 Kitaplar</span>
+                    <h3>İlham Verici ve Gelişim Kitapları</h3>
+                    <p>Kişisel gelişim, teknoloji ve inovasyon hakkında okuduğum ve tavsiye ettiğim kitaplar.</p>
+                </article>
 
-            <div class="story-cv-timeline" id="storyCvTimeline">
-                <article class="story-step" data-step>
-                    <span class="story-year">2023 - Devam</span>
-                    <h3>Fırat Üniversitesi — Yönetim Bilişim Sistemleri</h3>
-                    <p>Akademik temelimi finans, veri analizi ve dijital iş süreçleri üzerinde derinleştiriyorum (GANO: 3.30).</p>
+                <!-- BELGESELLER & ANİMASYONLAR -->
+                <article class="story-step story-step-clickable" data-step data-recommendations-id="documentaries" role="button" tabindex="0" aria-label="Belgeseller ve animasyonlar detayını aç">
+                    <span class="story-year">🎬 Belgeseller & Animasyonlar</span>
+                    <h3>Belgeseller & Animasyonlar</h3>
+                    <p>Hayal gücünü, insan hikayelerini ve dünyaya farklı bakış açılarını bir araya getiren seçkiler.</p>
                 </article>
-                <article class="story-step" data-step>
-                    <span class="story-year">2024 - Devam</span>
-                    <h3>HSD — Başkan Yardımcısı & Etkinlik / Sponsorluk</h3>
-                    <p>100+ katılımcılı etkinliklerde moderasyon, koordinasyon ve kurumsal iletişim süreçlerini yönettim.</p>
+
+                <!-- FİLMLER -->
+                <article class="story-step story-step-clickable" data-step data-recommendations-id="movies" role="button" tabindex="0" aria-label="Filmler detayını aç">
+                    <span class="story-year">🎭 Filmler</span>
+                    <h3>Düşündüren Filmler</h3>
+                    <p>Hikaye anlatımı, karakter gelişimi ve yaratıcı sinematografi açısından özel bulduğum filmler.</p>
                 </article>
-                <article class="story-step" data-step>
-                    <span class="story-year">Zorunlu Staj</span>
-                    <h3>Desa Deri — IT Stajyeri</h3>
-                    <p>Ağ cihazları, switch/router ve sunucu odası operasyonlarında teknik destek verdim.</p>
-                </article>
-                <article class="story-step" data-step>
-                    <span class="story-year">Araştırma & Gönüllülük</span>
-                    <h3>TÜBİTAK 2209-A, Erasmus+ ve Afet Gönüllülüğü</h3>
-                    <p>Yapay zeka araştırması, uluslararası gençlik çalışmaları ve afet eğitimleriyle çok disiplinli deneyim kazandım.</p>
-                </article>
+
+            </div>
+
+            <!-- Kitaplar Detay Sayfası -->
+            <div id="recommendations-detail" class="recommendations-detail-page hidden" data-page="recommendations-detail">
+                <button class="back-btn" id="backToRecommendations">← Önerilere Dön</button>
+                <h3 class="recommendations-detail-title" id="recommendationsDetailTitle">Kitaplar</h3>
+                
+                <div class="recommendations-carousel" id="recommendationsCarousel">
+                    <div class="recommendations-content" id="recommendationsContent">
+                        <!-- Kitap 1 -->
+                        <div class="recommendation-card" data-rec-group="books">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/k1.png" alt="Kitap önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Kitap Önerisi</h3>
+                                <p class="recommendation-description">
+                                    Bu kitap bana farklı düşünme biçimlerini, üretkenliği ve kendimi geliştirme isteğini hatırlatıyor. Okurken altını çizdiğim fikirler bana ilham verdi.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Kitap 2 -->
+                        <div class="recommendation-card" data-rec-group="books">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/k2.png" alt="Kitap önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Gelişim Kitabı</h3>
+                                <p class="recommendation-description">
+                                    Kendi yolumu çizerken daha disiplinli, meraklı ve cesur olmam gerektiğini hissettiren bir öneri. Özellikle motivasyon aradığım dönemlerde iyi geliyor.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Kitap 3 -->
+                        <div class="recommendation-card" data-rec-group="books">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/k3.png" alt="Kitap önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>İlham Veren Okuma</h3>
+                                <p class="recommendation-description">
+                                    Bana yeni bakış açıları kazandıran, düşüncelerimi toparlamama yardımcı olan bir öneri. Sayfaları arasında kendime küçük notlar çıkarmayı seviyorum.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-category-choice" data-rec-group="documentaries">
+                            <button class="recommendation-category-card" type="button" data-rec-filter="animations">
+                                <img src="./assets/images/soul.jpg" alt="Animasyonlar kapak görseli" class="recommendation-category-cover">
+                                <span class="recommendation-category-icon">✨</span>
+                                <strong>Animasyonlar</strong>
+                                <small>Renkli hikayeler, güçlü duygular ve yaratıcı dünyalar.</small>
+                            </button>
+                            <button class="recommendation-category-card" type="button" data-rec-filter="documentary-films">
+                                <img src="./assets/images/documentary1.png" alt="Belgeseller kapak görseli" class="recommendation-category-cover">
+                                <span class="recommendation-category-icon">🎥</span>
+                                <strong>Belgeseller</strong>
+                                <small>Gerçek hikayeler, keşifler ve düşündüren anlatılar.</small>
+                            </button>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/Ekran görüntüsü 2026-05-11 110901.png" alt="Megamind animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Megamind</h3>
+                                <p class="recommendation-description">Kötü olmayı seçen bir karakterin aslında kim olmak istediğini keşfetmesini eğlenceli ve zeki bir dille anlatıyor.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/Ekran görüntüsü 2026-05-11 110941.png" alt="Ejderhanı Nasıl Eğitirsin animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Ejderhanı Nasıl Eğitirsin</h3>
+                                <p class="recommendation-description">Önyargıları aşmanın, dostluğun ve cesaretin bazen savaşmak yerine anlamaya çalışmakla başladığını hatırlatıyor.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/Neşeli_ayaklar.jpg" alt="Neşeli Ayaklar animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Neşeli Ayaklar</h3>
+                                <p class="recommendation-description">Kendi sesini bulma, farklılıklarını kabullenme ve kalabalığın içinde kendin olabilme üzerine sıcacık bir hikaye.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/soul.jpg" alt="Soul animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Soul</h3>
+                                <p class="recommendation-description">Hayattaki amacımızı ararken küçük anların değerini fark ettiren, müzikle ve duyguyla dolu zarif bir animasyon.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/VOL-İ.png" alt="VOL-İ animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>VOL-İ</h3>
+                                <p class="recommendation-description">Tüketimle kirlenmiş bir dünyada sevginin, merakın ve küçük bir umut ışığının neleri değiştirebileceğini gösteriyor.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="animations">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/Yukarı_Bak.jpg" alt="Yukarı Bak animasyon önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Yukarı Bak</h3>
+                                <p class="recommendation-description">Kaybetmek, hayal kurmak ve yeniden yola çıkmak üzerine; hem komik hem de kalbe dokunan unutulmaz bir yolculuk.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="documentary-films">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/documentary1.png" alt="Humpback Whales belgesel önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Humpback Whales</h3>
+                                <p class="recommendation-description">Nesli tükenme tehlikesinden dönen kambur balinaların göçünü ve okyanustaki büyüleyici yaşamlarını etkileyici görüntülerle anlatıyor.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="documentary-films">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/documentary2.png" alt="My Octopus Teacher belgesel önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>My Octopus Teacher</h3>
+                                <p class="recommendation-description">Bir dalgıcın ahtapotla kurduğu beklenmedik bağ üzerinden doğaya sabırla bakmanın ne kadar dönüştürücü olduğunu gösteriyor.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="documentary-films">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/documentary3.png" alt="Buy Now! The Shopping Conspiracy belgesel önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Buy Now! The Shopping Conspiracy</h3>
+                                <p class="recommendation-description">Modern tüketim alışkanlıklarının perde arkasını sorgulatan, alışverişe ve ihtiyaç kavramına yeniden bakmayı sağlayan çarpıcı bir belgesel.</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="movies">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/Ekran görüntüsü 2026-05-11 105341.png" alt="Düşündüren film önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Düşündüren Film</h3>
+                                <p class="recommendation-description">
+                                    Hikayesi bittikten sonra bile zihnimde dönmeye devam eden filmleri seviyorum. Karakterlerin iç dünyası bana çok şey düşündürüyor.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-card" data-rec-group="movies">
+                            <div class="recommendation-visual">
+                                <img src="./assets/images/yesil_yol.jpg" alt="Yeşil Yol film önerisi" class="recommendation-image">
+                            </div>
+                            <div class="recommendation-info">
+                                <h3>Görsel Anlatım</h3>
+                                <p class="recommendation-description">
+                                    Sadece konusu değil, renkleri, sahneleri ve müziğiyle de atmosfer kuran filmler bana tasarım açısından da ilham veriyor.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Carousel Kontrolleri -->
+                    <div class="carousel-controls" aria-label="Öneriler gezinme">
+                        <button class="carousel-btn" id="recommendationsPrev" type="button" aria-label="Önceki öneri">←</button>
+                        <span class="carousel-counter" id="recommendationsCounter">1 / 3</span>
+                        <button class="carousel-btn" id="recommendationsNext" type="button" aria-label="Sonraki öneri">→</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -280,8 +483,8 @@
             <span class="section-num">04</span>
             <div class="blog-heading-row">
                 <h2 class="section-heading" id="blog-title">
-                    Medium Yazıları
                     <span class="medium-logo-mark" aria-hidden="true">M</span>
+                    Medium Yazıları
                 </h2>
 
                 <div class="blog-carousel-controls" aria-label="Medium yazıları gezinme">
@@ -292,14 +495,35 @@
 
             <div class="blog-carousel" id="blogCarousel" aria-label="Medium yazıları akışı">
                 <div class="blog-posts" id="blogPosts">
-                    <div class="blog-card medium-card medium-placeholder">
-                        <div class="medium-card-content">Yazı yakında</div>
+                    <div class="blog-card medium-card" data-post-id="1">
+                        <div class="medium-card-cover">
+                            <img src="./assets/images/medium1.png" alt="Yapay zekanın yapamayıp insanların yapabileceği şeyler nelerdir? görseli">
+                        </div>
+                        <div class="medium-card-content">
+                            <h3>Yapay zekanın yapamayıp insanların yapabileceği şeyler nelerdir?</h3>
+                            <p>Kısa özet daha sonra eklenecek.</p>
+                            <a class="medium-read-link" href="https://medium.com/@eyllylmaz_66080" target="_blank" rel="noopener">Yazıya Git</a>
+                        </div>
                     </div>
-                    <div class="blog-card medium-card medium-placeholder">
-                        <div class="medium-card-content">Yazı yakında</div>
+                    <div class="blog-card medium-card" data-post-id="2">
+                        <div class="medium-card-cover">
+                            <img src="./assets/images/medium2.png" alt="Ülkemizdeki İmkansız Görünen Girişimci Olmak görseli">
+                        </div>
+                        <div class="medium-card-content">
+                            <h3>Ülkemizdeki İmkansız (Görünen) Girişimci Olmak</h3>
+                            <p>Kısa özet daha sonra eklenecek.</p>
+                            <a class="medium-read-link" href="https://medium.com/@eyllylmaz_66080" target="_blank" rel="noopener">Yazıya Git</a>
+                        </div>
                     </div>
-                    <div class="blog-card medium-card medium-placeholder">
-                        <div class="medium-card-content">Yazı yakında</div>
+                    <div class="blog-card medium-card" data-post-id="3">
+                        <div class="medium-card-cover">
+                            <img src="./assets/images/medium3.png" alt="Yapay Zekadan Ayrışan İnsan Özgü görseli">
+                        </div>
+                        <div class="medium-card-content">
+                            <h3>Yapay Zekadan Ayrışan, İnsan Özgü</h3>
+                            <p>Kısa özet daha sonra eklenecek.</p>
+                            <a class="medium-read-link" href="https://medium.com/@eyllylmaz_66080" target="_blank" rel="noopener">Yazıya Git</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -409,24 +633,39 @@
                     <li><a href="#home"     class="scroll-link">Anasayfa</a></li>
                     <li><a href="#about"    class="scroll-link">Hakkımda</a></li>
                     <li><a href="#projects" class="scroll-link">Projeler</a></li>
-                    <li><a href="#events"   class="scroll-link">Etkinlikler</a></li>
-                    <li><a href="#blog"     class="scroll-link">Medium Yazıları</a></li>
-                    <li><a href="#contact"  class="scroll-link">İletişim</a></li>
+                    <li><a href="#events"          class="scroll-link">Etkinlikler</a></li>
+                    <li><a href="#recommendations" class="scroll-link">Öneriler</a></li>
+                    <li><a href="#blog"            class="scroll-link">Medium Yazıları</a></li>
+                    <li><a href="#contact"         class="scroll-link">İletişim</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4 class="footer-heading">İletişim</h4>
                 <ul>
-                    <li><a href="mailto:eyllyimaz853@gmail.com">📧 Gmail
-                        <title>Gmail'e gider</title></a></li>
-                    <li><a href="https://github.com"   target="_blank" rel="noopener">🐙 GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/aylul01/" target="_blank" rel="noopener">💼 LinkedIn</a></li>
+                    <li><a href="mailto:eyllyimaz853@gmail.com" class="footer-contact-link" aria-label="Gmail">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm-.4 4.25-7.07 4.42a1 1 0 0 1-1.06 0L4.4 8.25A1 1 0 1 1 5.46 6.55L12 10.64l6.54-4.09a1 1 0 1 1 1.06 1.7Z"/>
+                        </svg>
+                        Gmail
+                    </a></li>
+                    <li><a href="https://github.com" target="_blank" rel="noopener" class="footer-contact-link" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.11.79-.25.79-.56v-2.02c-3.22.7-3.9-1.38-3.9-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.74-1.56-2.57-.29-5.28-1.29-5.28-5.74 0-1.27.45-2.3 1.2-3.12-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.2 1.19A11.08 11.08 0 0 1 12 6.02c.99 0 1.99.13 2.92.39 2.22-1.5 3.2-1.19 3.2-1.19.63 1.6.23 2.78.11 3.07.75.82 1.2 1.85 1.2 3.12 0 4.46-2.72 5.44-5.3 5.73.42.36.79 1.08.79 2.18v3.02c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"/>
+                        </svg>
+                        GitHub
+                    </a></li>
+                    <li><a href="https://www.linkedin.com/in/aylul01/" target="_blank" rel="noopener" class="footer-contact-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.45 20.45h-3.56v-5.58c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm1.78 13.02H3.54V9H7.1v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0Z"/>
+                        </svg>
+                        LinkedIn
+                    </a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 <strong>Eylül Yılmaz</strong>. Tüm hakları saklıdır.</p>
-            <p class="footer-made">💚 ile yapıldı &mdash; HTML, CSS &amp; JavaScript</p>
+            <p class="footer-made">Web Tasarım projesi için yapıldı</p>
         </div>
     </footer>
 

@@ -89,17 +89,31 @@ function setupSkillBars() {
 function setupScrollToTop() {
     const btn = document.createElement('button');
     btn.id = 'scrollToTopBtn';
+    btn.type = 'button';
     btn.innerHTML = '↑';
     btn.title = 'Yukarıya Git';
+    btn.setAttribute('aria-label', 'Sayfanın en üstüne dön');
     btn.style.cssText = `
         position:fixed; bottom:30px; right:30px;
         background:var(--primary-green); color:var(--bg-dark);
         border:none; border-radius:50%; width:44px; height:44px;
         font-size:20px; font-weight:bold; cursor:pointer;
-        display:none; z-index:500; box-shadow:var(--shadow-lg);
-        transition:all 0.3s ease;
+        display:none; z-index:10000; box-shadow:var(--shadow-lg);
+        transition:all 0.3s ease; pointer-events:auto;
     `;
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    const goToTop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const home = document.getElementById('home');
+        if (home) {
+            home.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        document.documentElement.scrollTo?.({ top: 0, left: 0, behavior: 'smooth' });
+        document.body.scrollTo?.({ top: 0, left: 0, behavior: 'smooth' });
+    };
+    btn.addEventListener('click', goToTop);
+    btn.addEventListener('pointerup', goToTop);
     btn.addEventListener('mouseenter', () => btn.style.transform = 'scale(1.1)');
     btn.addEventListener('mouseleave', () => btn.style.transform = 'scale(1)');
     document.body.appendChild(btn);
@@ -222,6 +236,344 @@ function setupHeroButtons() {
     }
 }
 
+/* ──────────────────────────────────
+   10. ETKİNLİKLER — DETAY MODAL
+────────────────────────────────── */
+function setupEventDetails() {
+    const eventCards = document.querySelectorAll('[data-event-id]');
+    if (!eventCards.length) return;
+
+    const eventDetails = {
+        'firat-hsd': {
+            title: 'Fırat Üniversitesi HSD — Başkan Yardımcısı',
+            period: '2024+',
+            summary: 'Kulüp koordinasyonu, etkinlik/sponsorluk süreçleri ve kurumlar arası iletişim yönetimi.',
+            media: [
+                './assets/images/1.jpg',
+                './assets/images/2.jpg',
+                './assets/images/3.jpg',
+                './assets/images/4.jpg',
+                './assets/images/5.jpg',
+                './assets/images/6.jpeg'
+            ],
+            notesTitle: 'Fırat Üniversitesi HSD (Huawei Student Developers) – Başkan Yardımcısı / Etkinlik & Sponsorluk Komitesi',
+            notes: [
+                'Kulüp yönetiminde başkan yardımcısı olarak ekip koordinasyonu, etkinlik planlama ve temsil süreçlerini yürüttüm.',
+                '100+ katılımcılı birçok etkinlikte moderasyon, sunum ve panel yönetimi görevlerini üstlendim.',
+                'Huawei, Turkcell, Türk Telekom, Dias Technology ve Doğuş Technology gibi firmalarla iletişim kurarak konuşmacı koordinasyonu, program akışı ve sahne yönetimini organize ettim.',
+                'Sponsorluk yazışmaları, resmi iletişim, içerik hazırlığı ve paydaş ilişkileri süreçlerinde aktif görev aldım.'
+            ]
+        },
+        'desa-it-staj': {
+            title: 'Desa Deri — IT Stajyeri',
+            period: 'Staj',
+            summary: 'Ağ/sunucu sistemlerinde teknik destek, yazılım kurulumu ve veri entegrasyonu süreçleri.',
+            media: ['./assets/images/desa.jpg'],
+            notesTitle: 'Desa Deri — Zorunlu IT Stajı',
+            notes: [
+                'DESA DERİ\'de bir aylık zorunlu IT stajımı başarıyla tamamladım!',
+                'Bu süreçte, IT ekibinin dinamik bir üyesi olarak hem teknik becerilerimi geliştirdim hem de kurumsal çalışma ortamını yakından deneyimleme fırsatı buldum. 🪄'
+            ],
+            bulletIntro: 'Bu staj süresince,',
+            bullets: [
+                'IT altyapısındaki uç cihazlar, ağ donanımları ve çevre birimlerinin donanım teşhis, bakım ve onarım süreçlerinde aktif rol aldım.',
+                'Sunucu odasında rack-mounted sistemler, switch, router ve patch panel yapılandırmalarını yerinde inceleme imkanı buldum.',
+                'Kullanıcı bilgisayarlarına yazılım kurulumları gerçekleştirmenin yanı sıra, Excel üzerinde veri entegrasyonu yaparak iş süreçlerine katkıda bulundum.',
+                'Kurum içi teknik arızalarda problem tanılama ve çözüm üretme becerilerimi geliştirdim ve alanında yetkin mühendislerle yaptığım görüşmelerle sistem, ağ ve donanım teknolojileri üzerine değerli bilgiler edindim.'
+            ]
+        },
+        'tubitak-2209a-arastirma': {
+            title: 'TÜBİTAK 2209-A Araştırma Projesi',
+            period: 'Araştırma',
+            summary: 'Türk işaret dili jestlerini tanıyan yapay zeka modelinde veri hazırlama ve modelleme çalışmaları.',
+            media: ['./assets/images/tubitak.png'],
+            notesTitle: 'TÜBİTAK 2209-A — Türk İşaret Dili Destekli Görüntü İşleme',
+            notes: [
+                'TÜBİTAK 2209-A kapsamında yürüttüğümüz projede, Türk İşaret Dili jestlerini tanıyan yapay zeka tabanlı bir görüntü işleme modeli üzerinde çalıştım.',
+                'Bu süreçte hem akademik araştırma disiplinini deneyimledim hem de veri odaklı bir yapay zeka projesinde uçtan uca katkı sunma fırsatı buldum.'
+            ],
+            bulletIntro: 'Proje süresince,',
+            bullets: [
+                'Jest görüntüleri için veri toplama, etiketleme ve ön işleme adımlarında aktif rol alarak modelin eğitimine uygun, tutarlı bir veri seti oluşturulmasına katkıda bulundum.',
+                'OpenCV ve Python ekosistemi ile görüntü iyileştirme, özellik çıkarma ve deney düzenleri kurarak model performansını izlenebilir biçimde test ettim.',
+                'Sınıflandırma ve modelleme aşamasında farklı mimari ve hiperparametre denemeleriyle doğruluk ve genelleme hedeflerini dengelemeye yönelik iteratif geliştirme yaptım.',
+                'Araştırma ekibiyle düzenli değerlendirmelerle literatür ve proje hedefleri doğrultusunda sonuçları yorumlayarak bilimsel raporlama ve sunum kültürünü pekiştirdim.'
+            ]
+        },
+        'sosyal-etki-gonulluluk': {
+            title: 'Gönüllülük ve Gençlik Projeleri',
+            period: 'Sosyal Etki',
+            summary: 'İpek Yolu Afet Gönüllüleri, KA154 Erasmus+ ve T3 Vakfı kapsamında aktif katılım.',
+            media: [
+                {
+                    src: './assets/images/ald_dernek.jpg',
+                    caption: 'İpek Yolu Afet Gönüllüleri ve sivil toplum iş birlikleri kapsamında dernek ortamında yürütülen gönüllü çalışmalardan bir kare; afet bilinci ve dayanışma temalı etkinliklerde aktif görev aldığım anları yansıtıyor.'
+                },
+                {
+                    src: './assets/images/ald_dernek1.jpg',
+                    caption: 'Afet eğitimi ve farkındalık oturumlarının yapıldığı sahalardan; katılımcılarla birlikte planlama ve sahada koordinasyon deneyimimi pekiştirdiğim bir görüntü.'
+                },
+                {
+                    src: './assets/images/erasmus.png',
+                    caption: 'KA154 Erasmus+ Gençlik Çalışmaları kapsamında uluslararası gençlik buluşmalarından; kültürlerarası iletişim ve proje odaklı iş birliği pratiği kazandığım bir an.'
+                },
+                {
+                    src: './assets/images/erasmus1.png',
+                    caption: 'Erasmus+ programı çerçevesinde grup çalışmaları, atölyeler ve paylaşım oturumlarının yapıldığı etkinlik alanından; takım içi sorumluluk ve sunum becerilerimi geliştirdiğim süreçlere dair bir görüntü.'
+                },
+                {
+                    src: './assets/images/erasmus2.png',
+                    caption: 'Uluslararası katılımcılarla proje çıktılarını ve deneyimleri değerlendirdiğimiz ağ kurma / kapanış aşamasından bir kare; gençlik çalışmalarının çok dilli ve çok kültürlü yönünü özetliyor.'
+                },
+                {
+                    src: './assets/images/kulup_sponsorluk.png',
+                    caption: 'Üniversite kulübü kapsamında sponsor ve paydaş kurumlarla yürütülen iletişim, programa dahil etme ve iş birliği görünürlüğünün öne çıktığı bir etkinlik ortamından kare; sahne ve akışın paydaş beklentileriyle uyumlu ilerlemesine katkı verdiğim dönemden.'
+                },
+                {
+                    src: './assets/images/stand.png',
+                    caption: 'Kulüp veya kurumsal temsilde hazırlanan bilgilendirme stantlarından; ziyaretçilerle etkileşim, tanıtım ve içerik paylaşımı süreçlerini yürüttüğüm stant deneyimimi gösteriyor.'
+                },
+                {
+                    src: './assets/images/stant1.png',
+                    caption: 'Farkındalık ve tanıtım odağında ikinci bir stant kurulumu veya alan düzenlemesinden; görünürlüğü artırmak için iletişim noktalarını organize ettiğim bir görüntü.'
+                },
+                {
+                    src: './assets/images/yesilay_afad_kamp.jpg',
+                    caption: 'Yeşilay ve AFAD iş birliğiyle düzenlenen kampta afet bilinci, ilk yardım ve bağımlılıkla mücadele başlıklarında teorik ve uygulamalı oturumlara katıldığım eğitim sürecinden bir kare.'
+                },
+                {
+                    src: './assets/images/yesilay_afad_kampı.jpg',
+                    caption: 'Kamptaki takım çalışması ve saha uygulamalarında risk farkındalığını pekiştiren modüllerden biri; gönüllü disiplini ve kurumsal eğitmen yönlendirmesiyle ilerlediğimiz bir an.'
+                },
+                {
+                    src: './assets/images/yesilay_stant.png',
+                    caption: 'Yeşilay çatısı altında yürütülen bilgilendirme stant etkinliğinde ziyaretçilerle birebir görüşerek mesajlaşma ve kayıt süreçlerinde destek verdiğim çalışmalardan biri.'
+                }
+            ],
+            notesTitle: 'Gönüllülük ve gençlik alanında iz bırakan çalışmalar',
+            notes: [
+                'İpek Yolu Afet Gönüllüleri, KA154 Erasmus+ ve T3 Vakfı gibi yapılar altında hem sahada hem salonda gönüllülük yaptım; ekip çalışması, iletişim ve sorumluluk alanlarında kendimi sürekli geliştirdim.',
+                'Bu deneyimler, teknik projelerimin ötesinde toplumsal fayda üretme ve paydaşlarla güven ilişkisi kurma becerimi güçlendirdi.'
+            ],
+            bulletIntro: 'Öne çıkan başlıklar:',
+            bullets: [
+                'Afet bilinci ve gönüllü koordinasyonu odaklı saha etkinliklerinde aktif rol aldım.',
+                'Erasmus+ kapsamında uluslararası gençlik buluşmalarında takım çalışması ve kültürlerarası iletişim pratiği edindim.',
+                'Kulüp yönetimi ve sponsorluk süreçlerinde stant, tanıtım ve kurumsal temsil deneyimi kazandım.',
+                'Yeşilay ve AFAD iş birlikleriyle yürütülen eğitim ve farkındalık çalışmalarına katılarak sağlıklı yaşam ve risk yönetimi mesajlarını yaygınlaştırmaya katkı sağladım.'
+            ]
+        }
+    };
+
+    const openEventModal = (eventId) => {
+        const detail = eventDetails[eventId];
+        if (!detail) return;
+
+        const existing = document.getElementById('eventDetailModal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'eventDetailModal';
+        modal.className = 'event-modal-overlay';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', `${detail.title} detayları`);
+
+        const noteItems = (detail.notes || []).map((item) => `<p>${item}</p>`).join('');
+        const bulletBlock = Array.isArray(detail.bullets) && detail.bullets.length
+            ? `<p class="event-info-bullet-intro">${detail.bulletIntro || ''}</p><ul class="event-info-bullets">${detail.bullets.map((b) => `<li>${b}</li>`).join('')}</ul>`
+            : '';
+        const rawMedia = detail.media || [];
+        const normalizedMedia = rawMedia.map((item) => {
+            if (typeof item === 'string') return { src: item, caption: '' };
+            return { src: item.src, caption: item.caption || '' };
+        });
+        const hasSlideCaptions = normalizedMedia.some((m) => m.caption);
+        const firstCaption = normalizedMedia[0]?.caption || '';
+        const multiSlide = normalizedMedia.length > 1;
+        const navButtons = multiSlide ? `
+                <button type="button" class="event-slideshow-nav event-slideshow-prev" aria-label="Önceki görsel"><span aria-hidden="true">‹</span></button>
+                <button type="button" class="event-slideshow-nav event-slideshow-next" aria-label="Sonraki görsel"><span aria-hidden="true">›</span></button>
+            ` : '';
+        const mediaSlides = normalizedMedia.map((item, index) => `
+            <div class="event-slide" data-slide-index="${index}" aria-hidden="${index === 0 ? 'false' : 'true'}">
+                <img src="${item.src}" alt="${detail.title} görsel ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
+            </div>
+        `).join('');
+        const slideCaptionHtml = hasSlideCaptions
+            ? `<div class="event-slideshow-caption" aria-live="polite"><p class="event-slide-caption-text">${firstCaption}</p></div>`
+            : '';
+
+        modal.innerHTML = `
+            <div class="event-modal-box">
+                <button class="event-modal-close" id="eventModalCloseBtn" aria-label="Kapat">✕</button>
+                <div class="event-modal-header">
+                    <span class="event-modal-period">${detail.period}</span>
+                    <h3>${detail.title}</h3>
+                    <p>${detail.summary}</p>
+                </div>
+
+                <div class="event-media-stream event-media-slideshow${multiSlide ? '' : ' is-single'}" aria-label="Etkinlik görsel sunumu" aria-live="polite">
+                    <div class="event-slideshow-viewport">
+                        <div class="event-slideshow-track">
+                            ${mediaSlides}
+                        </div>
+                        ${navButtons}
+                    </div>
+                </div>
+                ${slideCaptionHtml}
+
+                <div class="event-info-flow">
+                    <h4>${detail.notesTitle || 'Bilgi Akışı'}</h4>
+                    <div class="event-info-text">${noteItems}${bulletBlock}</div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => modal.classList.add('is-open'));
+
+        const viewport = modal.querySelector('.event-slideshow-viewport');
+        const track = modal.querySelector('.event-slideshow-track');
+        const slides = modal.querySelectorAll('.event-slide');
+        const captionEl = modal.querySelector('.event-slide-caption-text');
+        let slideIndex = 0;
+        let autoplayTimer = null;
+        let slideshowCleanup = null;
+
+        const clearAutoplay = () => {
+            if (autoplayTimer) {
+                clearTimeout(autoplayTimer);
+                autoplayTimer = null;
+            }
+        };
+
+        const layoutTrack = () => {
+            if (!viewport || !track || !slides.length) return;
+            const w = viewport.offsetWidth;
+            if (w < 1) return;
+            slides.forEach((s) => { s.style.width = `${w}px`; });
+            track.style.transform = `translate3d(-${slideIndex * w}px,0,0)`;
+        };
+
+        if (multiSlide) {
+            const SLIDE_MS = 3000;
+            const scheduleAutoplay = () => {
+                clearAutoplay();
+                autoplayTimer = setTimeout(() => {
+                    goTo(slideIndex + 1);
+                }, SLIDE_MS);
+            };
+            const goTo = (i) => {
+                slideIndex = ((i % slides.length) + slides.length) % slides.length;
+                slides.forEach((el, idx) => {
+                    el.setAttribute('aria-hidden', idx === slideIndex ? 'false' : 'true');
+                });
+                if (captionEl) captionEl.textContent = normalizedMedia[slideIndex]?.caption || '';
+                layoutTrack();
+                scheduleAutoplay();
+            };
+            const onResize = () => { layoutTrack(); };
+            window.addEventListener('resize', onResize);
+            slideshowCleanup = () => {
+                clearAutoplay();
+                window.removeEventListener('resize', onResize);
+            };
+            modal.querySelector('.event-slideshow-prev')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goTo(slideIndex - 1);
+            });
+            modal.querySelector('.event-slideshow-next')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goTo(slideIndex + 1);
+            });
+            requestAnimationFrame(() => {
+                layoutTrack();
+                if (captionEl) captionEl.textContent = normalizedMedia[slideIndex]?.caption || '';
+                scheduleAutoplay();
+            });
+        } else if (captionEl && normalizedMedia[0]) {
+            captionEl.textContent = normalizedMedia[0].caption || '';
+            requestAnimationFrame(() => layoutTrack());
+        } else {
+            requestAnimationFrame(() => layoutTrack());
+        }
+
+        const closeImageLightbox = () => {
+            const lightbox = document.getElementById('eventImageLightbox');
+            if (!lightbox) return false;
+            lightbox.classList.remove('is-open');
+            lightbox.addEventListener('transitionend', () => lightbox.remove(), { once: true });
+            return true;
+        };
+
+        const openImageLightbox = (src, alt, captionText = '') => {
+            closeImageLightbox();
+            const lightbox = document.createElement('div');
+            lightbox.id = 'eventImageLightbox';
+            lightbox.className = 'event-image-lightbox';
+            const cap = captionText
+                ? `<p class="event-lightbox-caption">${captionText}</p>`
+                : '';
+            lightbox.innerHTML = `
+                <button class="event-image-lightbox-close" aria-label="Görseli kapat">✕</button>
+                <div class="event-lightbox-inner">
+                    <img src="${src}" alt="${alt}">
+                    ${cap}
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+            requestAnimationFrame(() => lightbox.classList.add('is-open'));
+            lightbox.querySelector('.event-image-lightbox-close')?.addEventListener('click', closeImageLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeImageLightbox();
+            });
+        };
+
+        const close = () => {
+            slideshowCleanup?.();
+            closeImageLightbox();
+            modal.classList.remove('is-open');
+            modal.addEventListener('transitionend', () => {
+                modal.remove();
+                document.body.style.overflow = '';
+            }, { once: true });
+        };
+
+        document.getElementById('eventModalCloseBtn')?.addEventListener('click', close);
+        modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+        modal.querySelectorAll('.event-slide img').forEach((img) => {
+            const slide = img.closest('.event-slide');
+            const idx = Number(slide?.getAttribute('data-slide-index') ?? '0');
+            img.addEventListener('click', () => openImageLightbox(
+                img.src,
+                img.alt,
+                normalizedMedia[idx]?.caption || ''
+            ));
+        });
+        document.addEventListener('keydown', function escClose(e) {
+            if (e.key === 'Escape') {
+                const lightboxWasClosed = closeImageLightbox();
+                if (!lightboxWasClosed) {
+                    close();
+                    document.removeEventListener('keydown', escClose);
+                }
+            }
+        });
+    };
+
+    eventCards.forEach((card) => {
+        card.addEventListener('click', () => openEventModal(card.getAttribute('data-event-id')));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openEventModal(card.getAttribute('data-event-id'));
+            }
+        });
+    });
+}
+
 function setupCvMenu() {
     const menu = document.getElementById('cvMenu');
     const toggle = document.getElementById('cvMenuToggle');
@@ -250,7 +602,7 @@ function setupCvMenu() {
 }
 
 /* ──────────────────────────────────
-   10. PROJELER — FİLTRE
+   11. PROJELER — FİLTRE
 ────────────────────────────────── */
 function setupProjectFilter() {
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -260,14 +612,14 @@ function setupProjectFilter() {
             btn.classList.add('active');
             const filter = btn.dataset.filter;
             if (window.projectManager) {
-                window.projectManager.filterProjects(filter);
+                window.projectManager.filterByCategory(filter);
             }
         });
     });
 }
 
 /* ──────────────────────────────────
-   11. HAMBURGER MENÜ
+   12. HAMBURGER MENÜ
 ────────────────────────────────── */
 function setupHamburgerMenu() {
     const hamburger = document.getElementById('hamburger');
@@ -309,7 +661,7 @@ function setupHamburgerMenu() {
 }
 
 /* ──────────────────────────────────
-   12. CUSTOM CURSOR
+   13. CUSTOM CURSOR
 ────────────────────────────────── */
 function setupCustomCursor() {
     const cursor = document.querySelector('.cursor');
@@ -317,10 +669,31 @@ function setupCustomCursor() {
 
     const show = () => cursor.classList.add('is-active');
     const hide = () => cursor.classList.remove('is-active');
+    let lastTrailTime = 0;
+    let lastX = 0;
+    let lastY = 0;
+
+    const createTrail = (x, y) => {
+        const trail = document.createElement('span');
+        trail.className = 'cursor-trail';
+        trail.style.left = `${x}px`;
+        trail.style.top = `${y}px`;
+        document.body.appendChild(trail);
+        trail.addEventListener('animationend', () => trail.remove(), { once: true });
+    };
 
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = `${e.clientX}px`;
         cursor.style.top = `${e.clientY}px`;
+
+        const now = Date.now();
+        const distance = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+        if (now - lastTrailTime > 22 && distance > 8) {
+            createTrail(e.clientX, e.clientY);
+            lastTrailTime = now;
+            lastX = e.clientX;
+            lastY = e.clientY;
+        }
     });
 
     document.addEventListener('mouseenter', show);
@@ -328,7 +701,7 @@ function setupCustomCursor() {
 }
 
 /* ──────────────────────────────────
-   13. HERO LOTTIE
+   14. HERO LOTTIE
 ────────────────────────────────── */
 function setupHeroLottie() {
     const container = document.getElementById('heroLottie');
@@ -350,25 +723,217 @@ function setupHeroLottie() {
 }
 
 /* ──────────────────────────────────
-   15. HİKAYE MODU CV
+   15. ÖNERİLER FİLTRESİ
 ────────────────────────────────── */
-function setupStoryCv() {
-    const steps = document.querySelectorAll('#storyCvTimeline [data-step]');
-    if (!steps.length) return;
+function setupRecommendations() {
+    const filterBtns = document.querySelectorAll('.rec-filter-btn');
+    const cards = document.querySelectorAll('.rec-card');
+    if (!filterBtns.length || !cards.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-active');
-            }
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.recFilter;
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.recType === filter) {
+                    card.classList.remove('rec-hidden');
+                } else {
+                    card.classList.add('rec-hidden');
+                }
+            });
         });
-    }, { threshold: 0.45 });
-
-    steps.forEach((step) => observer.observe(step));
+    });
 }
 
 /* ──────────────────────────────────
-   16. DİNAMİK AMBIENT TEMA
+   16. KİTAPLAR/ÖNERİLER CAROUSEL
+────────────────────────────────── */
+function setupRecommendationsCarousel() {
+    const storySteps = document.querySelectorAll('[data-recommendations-id]');
+    const detailPage = document.getElementById('recommendations-detail');
+    const backBtn = document.getElementById('backToRecommendations');
+    const title = document.getElementById('recommendationsDetailTitle');
+    
+    if (!storySteps.length || !detailPage || !backBtn) return;
+
+    const titles = {
+        books: 'Kitaplar',
+        documentaries: 'Belgeseller & Animasyonlar',
+        animations: 'Animasyonlar',
+        'documentary-films': 'Belgeseller',
+        movies: 'Filmler'
+    };
+
+    let currentIndex = 0;
+    let visibleCards = [];
+    let modal = null;
+    let activeRecommendationId = null;
+
+    const openDetail = (recommendationId) => {
+        const content = document.getElementById('recommendationsContent');
+        const items = Array.from(content?.querySelectorAll('[data-rec-group]') || []);
+        const cards = Array.from(content?.querySelectorAll('.recommendation-card') || []);
+        const categoryChoices = Array.from(content?.querySelectorAll('.recommendation-category-choice') || []);
+        const isCategoryChoice = categoryChoices.some(choice => choice.dataset.recGroup === recommendationId);
+        visibleCards = isCategoryChoice ? [] : cards.filter(card => card.dataset.recGroup === recommendationId);
+        if (!isCategoryChoice && !visibleCards.length) return;
+
+        items.forEach(item => {
+            item.classList.toggle('recommendation-hidden', item.dataset.recGroup !== recommendationId);
+        });
+
+        currentIndex = 0;
+        activeRecommendationId = recommendationId;
+        if (title) title.textContent = titles[recommendationId] || 'Öneriler';
+        openRecommendationsModal();
+        if (isCategoryChoice) {
+            updateCategoryChoice();
+        } else {
+            updateCarousel();
+        }
+    };
+
+    const closeDetail = () => {
+        if (!modal) return;
+        modal.classList.remove('is-open');
+        modal.addEventListener('transitionend', () => {
+            detailPage.classList.add('hidden');
+            document.body.appendChild(detailPage);
+            modal?.remove();
+            modal = null;
+            document.body.style.overflow = '';
+        }, { once: true });
+    };
+
+    const openRecommendationsModal = () => {
+        const existing = document.getElementById('recommendationsDetailModal');
+        if (existing) existing.remove();
+
+        modal = document.createElement('div');
+        modal.id = 'recommendationsDetailModal';
+        modal.className = 'event-modal-overlay recommendations-modal-overlay';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', `${title?.textContent || 'Öneriler'} detayları`);
+        modal.innerHTML = `
+            <div class="event-modal-box recommendations-modal-box">
+                <button class="event-modal-close recommendations-modal-close" id="recommendationsModalCloseBtn" aria-label="Kapat">✕</button>
+            </div>
+        `;
+
+        const box = modal.querySelector('.recommendations-modal-box');
+        detailPage.classList.remove('hidden');
+        box.appendChild(detailPage);
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => modal.classList.add('is-open'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeDetail();
+        });
+        modal.querySelector('#recommendationsModalCloseBtn')?.addEventListener('click', closeDetail);
+    };
+
+    const updateCarousel = () => {
+        const content = document.getElementById('recommendationsContent');
+        const counter = document.getElementById('recommendationsCounter');
+        const controls = document.querySelector('#recommendationsCarousel .carousel-controls');
+        const totalCards = visibleCards.length;
+        if (!content || !totalCards) return;
+
+        controls?.classList.remove('recommendation-hidden');
+        content.style.transform = 'translateX(0)';
+        visibleCards.forEach((card, index) => {
+            card.classList.toggle('recommendation-hidden', index !== currentIndex);
+        });
+        if (counter) {
+            counter.textContent = `${currentIndex + 1} / ${totalCards}`;
+            const activeCard = visibleCards[currentIndex];
+            const visual = activeCard?.querySelector('.recommendation-visual');
+            const info = activeCard?.querySelector('.recommendation-info');
+            if (visual && info) {
+                activeCard.insertBefore(counter, info);
+            }
+        }
+        updateBackButton();
+    };
+
+    const updateCategoryChoice = () => {
+        const controls = document.querySelector('#recommendationsCarousel .carousel-controls');
+        controls?.classList.add('recommendation-hidden');
+        updateBackButton();
+    };
+
+    const updateBackButton = () => {
+        if (activeRecommendationId === 'animations') {
+            backBtn.textContent = '← Belgesellere Göz At';
+            backBtn.dataset.targetRecommendation = 'documentary-films';
+        } else if (activeRecommendationId === 'documentary-films') {
+            backBtn.textContent = '← Animasyonlara Göz At';
+            backBtn.dataset.targetRecommendation = 'animations';
+        } else {
+            backBtn.textContent = '← Önerilere Dön';
+            delete backBtn.dataset.targetRecommendation;
+        }
+    };
+
+    const showNext = () => {
+        if (!visibleCards.length) return;
+        currentIndex = (currentIndex + 1) % visibleCards.length;
+        updateCarousel();
+    };
+
+    const showPrev = () => {
+        if (!visibleCards.length) return;
+        currentIndex = (currentIndex - 1 + visibleCards.length) % visibleCards.length;
+        updateCarousel();
+    };
+
+    const prevBtn = document.getElementById('recommendationsPrev');
+    const nextBtn = document.getElementById('recommendationsNext');
+
+    prevBtn?.addEventListener('click', showPrev);
+    nextBtn?.addEventListener('click', showNext);
+
+    document.addEventListener('keydown', (e) => {
+        if (modal?.classList.contains('is-open')) {
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+            if (e.key === 'Escape') closeDetail();
+        }
+    });
+
+    storySteps.forEach((step) => {
+        step.addEventListener('click', () => {
+            openDetail(step.getAttribute('data-recommendations-id'));
+        });
+        step.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openDetail(step.getAttribute('data-recommendations-id'));
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-rec-filter]').forEach((button) => {
+        button.addEventListener('click', () => {
+            openDetail(button.getAttribute('data-rec-filter'));
+        });
+    });
+
+    backBtn.addEventListener('click', () => {
+        const targetRecommendation = backBtn.dataset.targetRecommendation;
+        if (targetRecommendation) {
+            openDetail(targetRecommendation);
+            return;
+        }
+        closeDetail();
+    });
+}
+
+/* ──────────────────────────────────
+   17. DİNAMİK AMBIENT TEMA
 ────────────────────────────────── */
 function setupDynamicAmbientTheme() {
     const body = document.body;
@@ -436,11 +1001,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupContactForm();
     setupBlogToggle();
     setupHeroButtons();
+    setupEventDetails();
     setupProjectFilter();
     setupHamburgerMenu();
     setupCustomCursor();
     setupHeroLottie();
-    setupStoryCv();
+    setupRecommendations();
+    setupRecommendationsCarousel();
     setupDynamicAmbientTheme();
     setupCvMenu();
     loadData();

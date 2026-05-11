@@ -17,13 +17,12 @@ html {
 body {
     font-family: var(--font-primary);
     background-color: var(--page-bg-color);
-    background-image:
-        linear-gradient(var(--page-grid-line-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--page-grid-line-color) 1px, transparent 1px),
-        radial-gradient(var(--page-dot-color) 0.8px, transparent 0.8px);
-    background-size: 42px 42px, 42px 42px, 14px 14px;
+    background-image: var(--page-bg-image);
+    background-size: cover;
     background-attachment: fixed;
-    background-position: 0 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s ease, background-image 0.3s ease, color 0.2s ease;
     color: var(--text-light);
     font-size: var(--fs-base);
     line-height: var(--lh-normal);
