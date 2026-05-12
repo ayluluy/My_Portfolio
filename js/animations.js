@@ -76,6 +76,7 @@ class AnimationManager {
         this.scrollObserver = null;
         
         this.init();
+        document.addEventListener('portfolio:lang-changed', () => this.initTypewriter());
     }
     
     /**
@@ -95,12 +96,24 @@ class AnimationManager {
         const target = document.getElementById('typewriter-target');
         if (!target) return;
 
-        const roles = [
-            'Yönetim Bilişim Sistemleri Öğrencisi',
-            'Web Geliştirici 💻',
-            'UI/UX Meraklısı 🎨',
-            'Yazı Yazıyor & Öğreniyor ✍️'
-        ];
+        if (this.typewriter) {
+            this.typewriter.destroy();
+        }
+
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
+        const roles = isEnglish
+            ? [
+                'Management Information Systems Student',
+                'Web Developer',
+                'UI/UX Enthusiast',
+                'Writing & Learning'
+            ]
+            : [
+                'Yönetim Bilişim Sistemleri Öğrencisi',
+                'Web Geliştirici',
+                'UI/UX Meraklısı',
+                'Yazıyor & Öğreniyor'
+            ];
 
         this.typewriter = new TypewriterEffect(target, roles, {
             typeSpeed: 75,
@@ -223,12 +236,16 @@ class AnimationManager {
      * Draw Single Particle
      */
     drawParticle(particle) {
+        const alphaHex = Math.floor(Math.min(1, Math.max(0, particle.opacity)) * 255)
+            .toString(16)
+            .padStart(2, '0');
+
         // Glow efekti
         const glowGradient = this.ctx.createRadialGradient(
             particle.x, particle.y, 0,
             particle.x, particle.y, particle.radius * 3
         );
-        glowGradient.addColorStop(0, particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0'));
+        glowGradient.addColorStop(0, particle.color + alphaHex);
         glowGradient.addColorStop(1, particle.color + '00');
         
         this.ctx.fillStyle = glowGradient;
@@ -240,7 +257,7 @@ class AnimationManager {
         // Ana nokta
         this.ctx.beginPath();
         this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
+        this.ctx.fillStyle = particle.color + alphaHex;
         this.ctx.fill();
         this.ctx.closePath();
     }
@@ -251,7 +268,6 @@ class AnimationManager {
     drawConnections() {
         // Bağlantı çizgileri devre dışı - sadece noktalar görsün
         return;
-    }
     }
     
     /**

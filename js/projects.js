@@ -18,6 +18,7 @@ class ProjectManager {
      */
     init() {
         this.setupEventListeners();
+        document.addEventListener('portfolio:lang-changed', () => this.renderProjects());
         log('Project Manager initialized');
     }
     
@@ -110,18 +111,12 @@ class ProjectManager {
      * Static personal projects (no external JSON needed)
      */
     getStaticPersonalProjects() {
-        return [
-            {
-                id: 'recycle-art',
-                category: 'personal',
-                title: 'Sanatı Geri Dönüştür! ♻️',
-                excerpt: 'Giymediğin bir kıyafeti seç, mobil uygulamama yükle ve yeniden tasarlayıp tiyatro kostümüne çevir!',
-                image: './assets/images/sanatı_geri_donustur.jpg',
-                imageEmoji: '♻️',
-                imageBg: 'linear-gradient(135deg, rgba(0,168,107,0.25), rgba(65,105,225,0.18))',
-                technologies: ['Flutter', 'Dart', 'Firebase', 'ML Kit', 'Material Design'],
-                detail: {
-                    description: `
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
+        const copy = {
+            tr: {
+                recycleTitle: 'Sanatı Geri Dönüştür! ♻️',
+                recycleExcerpt: 'Giymediğin bir kıyafeti seç, mobil uygulamama yükle ve yeniden tasarlayıp tiyatro kostümüne çevir!',
+                recycleDescription: `
                         <p>Sanatı Geri Dönüştür, kullanımda olmayan kıyafetleri yapay zeka destekli bir mobil uygulama aracılığıyla tiyatro kostümüne dönüştürmeyi amaçlayan bir projedir.</p>
                         <p>Kullanıcı giymediği bir kıyafetin fotoğrafını uygulamaya yükler; yapay zeka renk, doku ve kesim analizini yaparak sahne kostümü önerileri üretir.</p>
                         <h4>Öne Çıkan Özellikler</h4>
@@ -139,21 +134,9 @@ class ProjectManager {
                             <li><strong>Material Design 3</strong> — UI bileşen sistemi</li>
                         </ul>
                     `,
-                    status: 'Geliştirme aşamasında',
-                    statusColor: '#f59e0b'
-                }
-            },
-            {
-                id: 'memorius',
-                category: 'personal',
-                title: 'MemoriUs 📔',
-                excerpt: 'Sana özel günlük, planlayıcı ve anılardan oluşan bir koleksiyon!',
-                image: './assets/images/memorius.png',
-                imageEmoji: '📔',
-                imageBg: 'linear-gradient(135deg, rgba(197,107,255,0.25), rgba(146,72,122,0.2))',
-                technologies: ['Flutter', 'Dart', 'SQLite', 'Hive', 'Provider'],
-                detail: {
-                    description: `
+                memoriusTitle: 'MemoriUs 📔',
+                memoriusExcerpt: 'Sana özel günlük, planlayıcı ve anılardan oluşan bir koleksiyon!',
+                memoriusDescription: `
                         <p>MemoriUs, kişisel büyüme yolculuğunu dijitalleştiren hepsi bir arada bir anı-günlük-planlayıcı uygulamasıdır.</p>
                         <p>Yazılı günlükler, ses kayıtları, fotoğraflar ve yapılacaklar listeleriyle hayatının her anını tek bir yerde saklayabilirsin.</p>
                         <h4>Öne Çıkan Özellikler</h4>
@@ -172,21 +155,9 @@ class ProjectManager {
                             <li><strong>Flutter Local Notifications</strong> — Hatırlatıcılar</li>
                         </ul>
                     `,
-                    status: 'Geliştirme aşamasında',
-                    statusColor: '#f59e0b'
-                }
-            },
-            {
-                id: 'tubitak-2209a-tid',
-                category: 'academic',
-                title: 'TÜBİTAK 2209-A İşaret Dili AI',
-                excerpt: 'Türk İşaret Dili jestlerini tanıyan yapay zeka temelli görüntü işleme modeli geliştirdim.',
-                image: './assets/images/tubitak.png',
-                imageEmoji: '🤟',
-                imageBg: 'linear-gradient(135deg, rgba(59,130,246,0.25), rgba(14,165,233,0.18))',
-                technologies: ['Python', 'OpenCV', 'Matplotlib'],
-                detail: {
-                    description: `
+                tubitakTitle: 'TÜBİTAK 2209-A İşaret Dili AI',
+                tubitakExcerpt: 'Türk İşaret Dili jestlerini tanıyan yapay zeka temelli görüntü işleme modeli geliştirdim.',
+                tubitakDescription: `
                         <p>TÜBİTAK 2209-A kapsamında, Türk İşaret Dili jestlerini algılayıp sınıflandıran yapay zeka destekli bir görüntü işleme modeli geliştirdim.</p>
                         <p>Model; kamera girdisi üzerinden el hareketlerini analiz eder, işaretleri sınıflandırır ve sonuçları görselleştirerek yorumlanabilir bir çıktı sunar.</p>
                         <h4>Öne Çıkan Özellikler</h4>
@@ -203,7 +174,119 @@ class ProjectManager {
                             <li><strong>Matplotlib</strong> — Eğitim/performans metriklerinin görselleştirilmesi</li>
                         </ul>
                     `,
-                    status: 'Tamamlandi',
+                developing: 'Geliştirme aşamasında',
+                completed: 'Tamamlandı'
+            },
+            en: {
+                recycleTitle: 'Recycle Art! ♻️',
+                recycleExcerpt: 'Pick a piece of clothing you no longer wear, upload it to my mobile app, and redesign it into a theater costume.',
+                recycleDescription: `
+                        <p>Recycle Art is a mobile app concept that aims to transform unused clothing into theater costumes with AI-supported recommendations.</p>
+                        <p>The user uploads a photo of a garment; the AI analyzes color, texture, and cut to suggest stage costume ideas.</p>
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>📸 Clothing photo upload and AI analysis</li>
+                            <li>🎭 Theater costume suggestion generation</li>
+                            <li>🎨 Color and texture matching logic</li>
+                            <li>💾 User collection and history</li>
+                        </ul>
+                        <h4>Technologies Used</h4>
+                        <ul>
+                            <li><strong>Flutter & Dart</strong> — Cross-platform mobile development</li>
+                            <li><strong>Firebase</strong> — Authentication and Firestore database</li>
+                            <li><strong>ML Kit</strong> — Image classification and analysis</li>
+                            <li><strong>Material Design 3</strong> — UI component system</li>
+                        </ul>
+                    `,
+                memoriusTitle: 'MemoriUs 📔',
+                memoriusExcerpt: 'A personal collection of journals, plans, and memories made just for you.',
+                memoriusDescription: `
+                        <p>MemoriUs is an all-in-one memory, journal, and planner app that digitizes a personal growth journey.</p>
+                        <p>Written journals, voice notes, photos, and task lists help keep meaningful moments in one place.</p>
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>📝 Journal writing with a rich text editor</li>
+                            <li>📅 Smart planner and calendar integration</li>
+                            <li>🖼️ Memory collection with photos and audio</li>
+                            <li>🔒 Local encrypted storage with privacy first</li>
+                            <li>✨ Mood tracking and statistics view</li>
+                        </ul>
+                        <h4>Technologies Used</h4>
+                        <ul>
+                            <li><strong>Flutter & Dart</strong> — Cross-platform mobile development</li>
+                            <li><strong>SQLite & Hive</strong> — Local database and caching</li>
+                            <li><strong>Provider</strong> — State management</li>
+                            <li><strong>Flutter Local Notifications</strong> — Reminders</li>
+                        </ul>
+                    `,
+                tubitakTitle: 'TUBITAK 2209-A Sign Language AI',
+                tubitakExcerpt: 'I developed an AI-based computer vision model that recognizes Turkish Sign Language gestures.',
+                tubitakDescription: `
+                        <p>As part of TUBITAK 2209-A, I worked on an AI-supported computer vision model that detects and classifies Turkish Sign Language gestures.</p>
+                        <p>The model analyzes hand movements from camera input, classifies signs, and presents interpretable outputs.</p>
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>📷 Real-time image capture and preprocessing</li>
+                            <li>🧠 AI-based gesture classification</li>
+                            <li>📊 Metric visualization and result analysis</li>
+                            <li>♿ A structure focused on accessible communication technologies</li>
+                        </ul>
+                        <h4>Technologies Used</h4>
+                        <ul>
+                            <li><strong>Python</strong> — Model development and data processing</li>
+                            <li><strong>OpenCV</strong> — Image capture, preprocessing, and feature extraction</li>
+                            <li><strong>Matplotlib</strong> — Training/performance metric visualization</li>
+                        </ul>
+                    `,
+                developing: 'In development',
+                completed: 'Completed'
+            }
+        };
+        const text = isEnglish ? copy.en : copy.tr;
+
+        return [
+            {
+                id: 'recycle-art',
+                category: 'personal',
+                title: text.recycleTitle,
+                excerpt: text.recycleExcerpt,
+                image: './assets/images/sanatı_geri_donustur.jpg',
+                imageEmoji: '♻️',
+                imageBg: 'linear-gradient(135deg, rgba(0,168,107,0.25), rgba(65,105,225,0.18))',
+                technologies: ['Flutter', 'Dart', 'Firebase', 'ML Kit', 'Material Design'],
+                detail: {
+                    description: text.recycleDescription,
+                    status: text.developing,
+                    statusColor: '#f59e0b'
+                }
+            },
+            {
+                id: 'memorius',
+                category: 'personal',
+                title: text.memoriusTitle,
+                excerpt: text.memoriusExcerpt,
+                image: './assets/images/memorius.png',
+                imageEmoji: '📔',
+                imageBg: 'linear-gradient(135deg, rgba(197,107,255,0.25), rgba(146,72,122,0.2))',
+                technologies: ['Flutter', 'Dart', 'SQLite', 'Hive', 'Provider'],
+                detail: {
+                    description: text.memoriusDescription,
+                    status: text.developing,
+                    statusColor: '#f59e0b'
+                }
+            },
+            {
+                id: 'tubitak-2209a-tid',
+                category: 'academic',
+                title: text.tubitakTitle,
+                excerpt: text.tubitakExcerpt,
+                image: './assets/images/tubitak.png',
+                imageEmoji: '🤟',
+                imageBg: 'linear-gradient(135deg, rgba(59,130,246,0.25), rgba(14,165,233,0.18))',
+                technologies: ['Python', 'OpenCV', 'Matplotlib'],
+                detail: {
+                    description: text.tubitakDescription,
+                    status: text.completed,
                     statusColor: '#22c55e'
                 }
             }
@@ -211,22 +294,25 @@ class ProjectManager {
     }
 
     getAllProjects() {
-        return [
-            ...this.getStaticPersonalProjects(),
-            ...(this.projects || [])
-        ];
+        return this.getStaticPersonalProjects();
     }
 
     /**
      * Create Project Card HTML
      */
     createProjectCard(project) {
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
         const techTags = project.technologies
             .map(tech => `<span class="tag">${tech}</span>`)
             .join('');
         
-        const categoryLabel = project.category === 'academic' ? 'Akademik' : 'Kişisel';
+        const categoryLabel = project.category === 'academic'
+            ? (isEnglish ? 'Academic' : 'Akademik')
+            : (isEnglish ? 'Personal' : 'Kişisel');
         const categoryClass = project.category === 'academic' ? 'badge-blue' : 'badge-personal';
+        const techAria = isEnglish ? 'Used technologies' : 'Kullanılan teknolojiler';
+        const detailLabel = isEnglish ? 'View Details' : 'Detay Gör';
+        const detailAria = isEnglish ? `${project.title} details` : `${project.title} detaylarını gör`;
 
         // Image area: real img or emoji placeholder
         const imageArea = project.image
@@ -245,16 +331,16 @@ class ProjectManager {
                         <h3 class="project-title">${project.title}</h3>
                         <span class="badge ${categoryClass}">${categoryLabel}</span>
                     </div>
-                    <div class="project-tags" aria-label="Kullanılan teknolojiler">
+                    <div class="project-tags" aria-label="${techAria}">
                         ${techTags}
                     </div>
                     <p class="project-excerpt">${project.excerpt}</p>
                     <button
                         class="btn btn-detail project-detail-btn"
                         data-project-id="${project.id}"
-                        aria-label="${project.title} detaylarını gör"
+                        aria-label="${detailAria}"
                     >
-                        Detay Gör <span aria-hidden="true">→</span>
+                        ${detailLabel} <span aria-hidden="true">→</span>
                     </button>
                 </div>
             </article>
@@ -265,6 +351,7 @@ class ProjectManager {
      * Open detail modal
      */
     openDetailModal(project) {
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
         // Remove existing modal
         const existing = document.getElementById('projectDetailModal');
         if (existing) existing.remove();
@@ -274,7 +361,7 @@ class ProjectManager {
         modal.className = 'project-modal-overlay';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', project.title + ' detayları');
+        modal.setAttribute('aria-label', isEnglish ? `${project.title} details` : `${project.title} detayları`);
 
         const statusBadge = project.detail?.status
             ? `<span class="project-status-badge" style="background:${project.detail.statusColor}22;color:${project.detail.statusColor};border:1px solid ${project.detail.statusColor}44">${project.detail.status}</span>`
@@ -290,7 +377,7 @@ class ProjectManager {
 
         modal.innerHTML = `
             <div class="project-modal-box">
-                <button class="project-modal-close" aria-label="Kapat" id="projectModalCloseBtn">✕</button>
+                <button class="project-modal-close" aria-label="${isEnglish ? 'Close' : 'Kapat'}" id="projectModalCloseBtn">✕</button>
 
                 <div class="project-modal-hero" style="background:${project.imageBg || 'rgba(0,168,107,0.12)'}">
                     ${modalHeroContent}
@@ -305,7 +392,7 @@ class ProjectManager {
                         ${techTags}
                     </div>
                     <div class="project-modal-description">
-                        ${project.detail?.description || '<p>Detay yakında eklenecek.</p>'}
+                        ${project.detail?.description || `<p>${isEnglish ? 'Details will be added soon.' : 'Detay yakında eklenecek.'}</p>`}
                     </div>
                 </div>
             </div>

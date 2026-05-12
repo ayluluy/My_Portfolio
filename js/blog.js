@@ -27,6 +27,7 @@ class BlogManager {
      */
     init() {
         this.setupEventListeners();
+        document.addEventListener('portfolio:lang-changed', () => this.renderBlogList());
         log('Blog Manager initialized');
     }
     
@@ -116,7 +117,7 @@ class BlogManager {
             this.filteredPosts = this.getFallbackPosts();
         }
         const cards = this.filteredPosts.map((post, idx) => this.createPostCard(post, idx)).join('');
-        container.innerHTML = cards + cards;
+        container.innerHTML = cards;
         this.initializeCarousel();
         this.bindCardHoverEvents();
         
@@ -139,21 +140,46 @@ class BlogManager {
      * Create Post Card HTML
      */
     createPostCard(post, idx = 0) {
-        const preview = (post.excerpt || '').slice(0, 95).trim();
+        const localizedPost = this.localizePost(post);
+        const preview = (localizedPost.excerpt || '').slice(0, 95).trim();
         const postUrl = post.url || post.medium_url || 'https://medium.com/@eyllylmaz_66080';
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
+        const readLabel = isEnglish ? 'Read Article' : 'Yazıya Git';
         
         return `
             <div class="blog-card medium-card" data-post-id="${post.id}" style="--i:${idx}">
                 <div class="medium-card-cover">
-                    ${post.featured_image ? `<img src="${post.featured_image}" alt="${post.title} görseli">` : '✍️'}
+                    ${post.featured_image ? `<img src="${post.featured_image}" alt="${localizedPost.title} ${isEnglish ? 'cover image' : 'görseli'}">` : '✍️'}
                 </div>
                 <div class="medium-card-content">
-                    <h3>${post.title}</h3>
+                    <h3>${localizedPost.title}</h3>
                     <p>${preview}${preview.length >= 80 ? '...' : ''}</p>
-                    <a class="medium-read-link" href="${postUrl}" target="_blank" rel="noopener">Yazıya Git</a>
+                    <a class="medium-read-link" href="${postUrl}" target="_blank" rel="noopener">${readLabel}</a>
                 </div>
             </div>
         `;
+    }
+
+    localizePost(post) {
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
+        if (!isEnglish) return post;
+
+        const translations = {
+            1: {
+                title: 'What Can Humans Do That Artificial Intelligence Cannot?',
+                excerpt: 'A short summary will be added soon.'
+            },
+            2: {
+                title: 'The Human Uniqueness That Stands Apart from AI',
+                excerpt: 'A short summary will be added soon.'
+            },
+            3: {
+                title: 'Becoming an Entrepreneur in Our Country When It Seems Impossible',
+                excerpt: 'A short summary will be added soon.'
+            }
+        };
+
+        return { ...post, ...(translations[post.id] || {}) };
     }
 
     getFallbackPosts() {
@@ -187,8 +213,7 @@ class BlogManager {
         const track = $('#blogPosts');
         if (!carousel || !track) return;
 
-        this.singleLoopWidth = track.scrollWidth / 2;
-        if (!this.singleLoopWidth) return;
+        this.singleLoopWidth = Math.max(0, track.scrollWidth - carousel.clientWidth);
         const firstCard = track.querySelector('.medium-card');
         if (firstCard) {
             const styles = window.getComputedStyle(track);
@@ -198,17 +223,13 @@ class BlogManager {
 
         carousel.scrollLeft = 0;
         this.updateActiveCard();
-        this.startAutoScroll();
     }
 
     startAutoScroll() {
-        const carousel = $('#blogCarousel');
-        if (!carousel || this.autoScrollTimer) return;
-
-        this.autoScrollTimer = setInterval(() => {
-            this.shiftByStep(this.autoScrollDirection, true);
-        }, this.autoScrollInterval);
+        // Cards are no longer duplicated, so the infinite auto-scroll stays disabled.
+        return;
     }
+
 
     stopAutoScroll() {
         if (!this.autoScrollTimer) return;
@@ -229,18 +250,16 @@ class BlogManager {
         const carousel = $('#blogCarousel');
         if (!carousel || !this.singleLoopWidth) return;
 
-        const nextLeft = carousel.scrollLeft + (direction * this.cardStep);
+        const nextLeft = Math.min(
+            this.singleLoopWidth,
+            Math.max(0, carousel.scrollLeft + (direction * this.cardStep))
+        );
         carousel.scrollTo({
             left: nextLeft,
             behavior: smooth ? 'smooth' : 'auto'
         });
 
         setTimeout(() => {
-            if (carousel.scrollLeft >= this.singleLoopWidth) {
-                carousel.scrollLeft -= this.singleLoopWidth;
-            } else if (carousel.scrollLeft < 0) {
-                carousel.scrollLeft += this.singleLoopWidth;
-            }
             this.updateActiveCard();
         }, smooth ? 320 : 0);
     }
@@ -263,7 +282,7 @@ class BlogManager {
 
     updateActiveCard(forceCard = null) {
         const carousel = $('#blogCarousel');
-        const cards = $$('.medium-card');
+        const cards = Array.from($$('.medium-card'));
         if (!carousel || cards.length === 0) return;
 
         cards.forEach((card) => card.classList.remove('is-active'));
@@ -282,6 +301,15 @@ class BlogManager {
         }, null)?.card;
 
         if (targetCard) targetCard.classList.add('is-active');
+    }
+
+    openPostDetail(post) {
+        return this.showPostDetail(post);
+    }
+
+    showPost(postId) {
+        const post = this.getPostById(Number(postId));
+        if (post) this.showPostDetail(post);
     }
     
     /**
@@ -314,17 +342,19 @@ class BlogManager {
      * Create Post Detail HTML
      */
     createPostDetailHTML(post) {
+        const localizedPost = this.localizePost(post);
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
         const date = formatDate(post.date);
         
         return `
             <article>
-                <h1>${post.title}</h1>
+                <h1>${localizedPost.title}</h1>
                 <div class="post-meta">
                     <div class="post-meta-item">
                         <span>📅 ${date}</span>
                     </div>
                     <div class="post-meta-item">
-                        <span>⏱️ ${post.reading_time} dakika</span>
+                        <span>⏱️ ${post.reading_time || '-'} ${isEnglish ? 'min' : 'dakika'}</span>
                     </div>
                     <div class="post-meta-item">
                         <span>🏷️ ${post.category}</span>
@@ -340,7 +370,7 @@ class BlogManager {
                 </div>
                 
                 <div class="related-posts">
-                    <h3>Benzer Yazılar</h3>
+                    <h3>${isEnglish ? 'Related Articles' : 'Benzer Yazılar'}</h3>
                     <div class="related-posts-grid" id="relatedPosts">
                         <!-- Related posts will be loaded here -->
                     </div>
@@ -367,7 +397,8 @@ class BlogManager {
             .slice(0, CONFIG.blog.relatedPostsCount);
         
         if (related.length === 0) {
-            relatedContainer.innerHTML = '<p>Benzer yazı bulunamadı.</p>';
+            const isEnglish = window.i18n?.getLanguage?.() === 'en';
+            relatedContainer.innerHTML = `<p>${isEnglish ? 'No related articles found.' : 'Benzer yazı bulunamadı.'}</p>`;
             return;
         }
         
@@ -375,8 +406,8 @@ class BlogManager {
             <div class="blog-card" style="cursor: pointer;">
                 <div class="blog-featured">${post.featured_image || '📝'}</div>
                 <div class="blog-body">
-                    <h3>${post.title}</h3>
-                    <p class="blog-excerpt">${post.excerpt}</p>
+                    <h3>${this.localizePost(post).title}</h3>
+                    <p class="blog-excerpt">${this.localizePost(post).excerpt}</p>
                 </div>
             </div>
         `).join('');
@@ -406,3 +437,4 @@ class BlogManager {
 
 // Initialize Blog Manager globally
 const blogManager = new BlogManager();
+window.blogManager = blogManager;

@@ -129,11 +129,17 @@
 /* Auto: matches OS preference */
 @media (prefers-color-scheme: light) {
     :root:not([data-theme='dark']) {
+        --primary-green: #7b2fb1;
+        --primary-blue: #7b2fb1;
+        --primary-blue-light: #9b4fd1;
+        --gradient-primary: linear-gradient(135deg, #7b2fb1 0%, #b34dff 100%);
+        --gradient-reverse: linear-gradient(135deg, #b34dff 0%, #7b2fb1 100%);
+        --gradient-subtle: linear-gradient(135deg, rgba(123, 47, 177, 0.14) 0%, rgba(179, 77, 255, 0.1) 100%);
         --bg-dark: #ffffff;
         --bg-darker: #efe8dd;
         --bg-card: #f8f1ea;
-        --text-light: #d8a7ff;
-        --text-muted: #b982e2;
+        --text-light: #2f143a;
+        --text-muted: #56305f;
         --text-dark: #e8e8e8;
         --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
         --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
@@ -145,20 +151,26 @@
         --page-dot-color: #d8cdb8;
         --page-grid-line-color: rgba(111, 79, 132, 0.14);
         --header-bg: rgba(247, 241, 227, 0.92);
-        --header-fg: #d8a7ff;
-        --header-control-bg: rgba(111, 79, 132, 0.08);
-        --header-control-border: rgba(111, 79, 132, 0.24);
+        --header-fg: #2f143a;
+        --header-control-bg: rgba(47, 20, 58, 0.08);
+        --header-control-border: rgba(47, 20, 58, 0.28);
         --ambient-tint: rgba(197, 107, 255, 0.08);
     }
 }
 
 /* Manual light theme (set via JS toggle) */
 [data-theme='light'] {
+    --primary-green: #7b2fb1;
+    --primary-blue: #7b2fb1;
+    --primary-blue-light: #9b4fd1;
+    --gradient-primary: linear-gradient(135deg, #7b2fb1 0%, #b34dff 100%);
+    --gradient-reverse: linear-gradient(135deg, #b34dff 0%, #7b2fb1 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(123, 47, 177, 0.14) 0%, rgba(179, 77, 255, 0.1) 100%);
     --bg-dark: #ffffff;
     --bg-darker: #efe8dd;
     --bg-card: #f8f1ea;
-    --text-light: #4A235A;
-    --text-muted: #4A235A;
+    --text-light: #2f143a;
+    --text-muted: #56305f;
     --text-dark: #e8e8e8;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
@@ -170,9 +182,9 @@
     --page-dot-color: #d8cdb8;
     --page-grid-line-color: rgba(111, 79, 132, 0.14);
     --header-bg: rgba(247, 241, 227, 0.92);
-    --header-fg: #4A235A;
-    --header-control-bg: rgba(111, 79, 132, 0.08);
-    --header-control-border: rgba(111, 79, 132, 0.24);
+    --header-fg: #2f143a;
+    --header-control-bg: rgba(47, 20, 58, 0.08);
+    --header-control-border: rgba(47, 20, 58, 0.28);
     --ambient-tint: rgba(197, 107, 255, 0.08);
 }
 

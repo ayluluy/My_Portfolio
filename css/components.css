@@ -886,12 +886,12 @@
 /* Light theme polish */
 [data-theme='light'] .btn-secondary {
     border-color: rgba(111, 79, 132, 0.3);
-    color: #4a3359;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .btn-secondary:hover {
-    background: rgba(197, 107, 255, 0.14);
-    color: #37253f;
+    background: rgba(123, 47, 177, 0.14);
+    color: var(--text-light);
 }
 
 [data-theme='light'] .card,
@@ -914,39 +914,39 @@
 [data-theme='light'] .blog-card h3,
 [data-theme='light'] .card h3,
 [data-theme='light'] .card h4 {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .project-excerpt,
 [data-theme='light'] .blog-card p,
 [data-theme='light'] .card p {
-    color: #4A235A;
+    color: var(--text-muted);
 }
 
 [data-theme='light'] .badge,
 [data-theme='light'] .badge-personal,
 [data-theme='light'] .project-status-badge {
-    background: rgba(118, 49, 150, 0.16);
-    color: #4A235A;
-    border-color: rgba(118, 49, 150, 0.34);
+    background: rgba(123, 47, 177, 0.16);
+    color: var(--text-light);
+    border-color: rgba(123, 47, 177, 0.38);
 }
 
 [data-theme='light'] .btn-detail {
-    color: #4A235A;
-    border-color: rgba(118, 49, 150, 0.42);
+    color: var(--text-light);
+    border-color: rgba(123, 47, 177, 0.46);
     background: rgba(255, 255, 255, 0.18);
 }
 
 [data-theme='light'] .skill-chip {
-    border-color: rgba(197, 107, 255, 0.38);
-    background: rgba(197, 107, 255, 0.11);
-    color: #4A235A;
+    border-color: rgba(123, 47, 177, 0.42);
+    background: rgba(123, 47, 177, 0.12);
+    color: var(--text-light);
 }
 
 [data-theme='light'] .skill-chip:hover {
-    background: rgba(197, 107, 255, 0.2);
-    border-color: rgba(197, 107, 255, 0.6);
-    color: #4A235A;
+    background: rgba(123, 47, 177, 0.2);
+    border-color: rgba(123, 47, 177, 0.62);
+    color: var(--text-light);
 }
 
 /* Link columns */

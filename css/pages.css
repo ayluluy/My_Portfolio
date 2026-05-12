@@ -444,7 +444,7 @@ body.ambient-night {
     width: 390px;
     height: 480px;
     border-radius: var(--radius-2xl);
-    border: 2px solid rgba(0, 168, 107, 0.3);
+    border: none;
     overflow: hidden;
     position: relative;
     background: transparent;
@@ -604,13 +604,13 @@ body.ambient-night {
 }
 
 [data-theme='light'] .meta-label {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .meta-val,
 [data-theme='light'] .about-bio,
 [data-theme='light'] .skills-heading {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 .skills-heading {
@@ -1269,17 +1269,17 @@ body.ambient-night {
 }
 
 [data-theme='light'] .medium-card h3 {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .medium-card p {
-    color: #4A235A;
+    color: var(--text-muted);
 }
 
 [data-theme='light'] .medium-read-link {
     color: #fff;
-    background: linear-gradient(135deg, #8f35c9, #d56bff);
-    border-color: rgba(118, 49, 150, 0.36);
+    background: linear-gradient(135deg, #7430a0, #a53ad1);
+    border-color: rgba(47, 20, 58, 0.42);
 }
 
 /* Blog detay geri butonu */
@@ -1454,11 +1454,11 @@ article h3 {
 }
 
 [data-theme='light'] .timeline-content h3 {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .timeline-content p {
-    color: #4A235A;
+    color: var(--text-muted);
 }
 
 [data-theme='light'] .timeline-date,
@@ -1480,15 +1480,15 @@ article h3 {
 }
 
 [data-theme='light'] .chip {
-    background: rgba(197, 107, 255, 0.1);
-    border-color: rgba(197, 107, 255, 0.34);
-    color: #4A235A;
+    background: rgba(123, 47, 177, 0.1);
+    border-color: rgba(123, 47, 177, 0.36);
+    color: var(--text-light);
 }
 
 [data-theme='light'] .chip:hover {
-    background: rgba(197, 107, 255, 0.18);
-    color: #37253f;
-    border-color: rgba(197, 107, 255, 0.62);
+    background: rgba(123, 47, 177, 0.18);
+    color: var(--text-light);
+    border-color: rgba(123, 47, 177, 0.62);
 }
 
 /* ─────────────────────────────────────
@@ -1654,14 +1654,14 @@ article h3 {
 }
 
 [data-theme='light'] .rec-filter-btn {
-    color: #4A235A;
-    border-color: rgba(197, 107, 255, 0.3);
+    color: var(--text-light);
+    border-color: rgba(123, 47, 177, 0.34);
 }
 
 [data-theme='light'] .rec-filter-btn.active {
-    color: #4A235A;
-    border-color: #4A235A;
-    background: rgba(123, 47, 247, 0.1);
+    color: var(--text-light);
+    border-color: var(--text-light);
+    background: rgba(123, 47, 177, 0.12);
 }
 
 /* Responsive */
@@ -1749,11 +1749,11 @@ article h3 {
 
 [data-theme='light'] .story-step-clickable h3,
 [data-theme='light'] .story-step-clickable .story-year {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .story-step-clickable p {
-    color: #4A235A;
+    color: var(--text-muted);
 }
 
 .recommendations-detail-page {
@@ -2019,11 +2019,11 @@ article h3 {
 }
 
 [data-theme='light'] .recommendation-info h3 {
-    color: #4A235A;
+    color: var(--text-light);
 }
 
 [data-theme='light'] .recommendation-description {
-    color: #4A235A;
+    color: var(--text-muted);
 }
 
 [data-theme='light'] .recommendation-visual {

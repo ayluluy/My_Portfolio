@@ -365,8 +365,90 @@ function setupEventDetails() {
         }
     };
 
+    const eventDetailsEn = {
+        'firat-hsd': {
+            title: 'Firat University HSD — Vice President',
+            period: '2024+',
+            summary: 'Managed club coordination, event/sponsorship operations, and institutional communication.',
+            notesTitle: 'Firat University HSD (Huawei Student Developers) — Vice President / Events & Sponsorship Committee',
+            notes: [
+                'As vice president, I worked on team coordination, event planning, and representation processes.',
+                'I took roles in moderation, presentation, and panel flow for events with 100+ participants.',
+                'I coordinated speaker communication, program flow, and stage management with companies such as Huawei, Turkcell, Turk Telekom, Dias Technology, and Dogus Technology.',
+                'I actively contributed to sponsorship communication, official correspondence, content preparation, and stakeholder relations.'
+            ]
+        },
+        'desa-it-staj': {
+            title: 'Desa Deri — IT Intern',
+            period: 'Internship',
+            summary: 'Supported network/server systems, software setup, and data integration processes.',
+            notesTitle: 'Desa Deri — Mandatory IT Internship',
+            notes: [
+                'I successfully completed my one-month mandatory IT internship at DESA DERI.',
+                'During this period, I improved my technical skills as a member of the IT team and experienced a corporate working environment closely.'
+            ],
+            bulletIntro: 'During this internship,',
+            bullets: [
+                'I supported hardware diagnosis, maintenance, and repair processes for endpoint devices, network equipment, and peripherals.',
+                'I observed rack-mounted systems, switches, routers, and patch panel structures in the server room.',
+                'I installed software on user computers and contributed to business processes through Excel-based data integration.',
+                'I improved my troubleshooting skills and learned valuable details about systems, networking, and hardware from experienced engineers.'
+            ]
+        },
+        'tubitak-2209a-arastirma': {
+            title: 'TUBITAK 2209-A Research Project',
+            period: 'Research',
+            summary: 'Worked on data preparation and modeling for an AI model recognizing Turkish Sign Language gestures.',
+            notesTitle: 'TUBITAK 2209-A — Turkish Sign Language Supported Computer Vision',
+            notes: [
+                'Within TUBITAK 2209-A, I worked on an AI-based computer vision model that recognizes Turkish Sign Language gestures.',
+                'This process helped me experience academic research discipline and contribute end-to-end to a data-focused AI project.'
+            ],
+            bulletIntro: 'Throughout the project,',
+            bullets: [
+                'I contributed to data collection, labeling, and preprocessing for gesture images to build a consistent training set.',
+                'I used OpenCV and Python for image enhancement, feature extraction, and measurable experiment setups.',
+                'I iterated on model architecture and hyperparameters to balance accuracy and generalization.',
+                'I interpreted outcomes with the research team and strengthened scientific reporting and presentation practices.'
+            ]
+        },
+        'sosyal-etki-gonulluluk': {
+            title: 'Volunteering & Youth Projects',
+            period: 'Social Impact',
+            summary: 'Active participation in Ipek Yolu Disaster Volunteers, KA154 Erasmus+, and T3 Foundation initiatives.',
+            notesTitle: 'Meaningful work in volunteering and youth projects',
+            notes: [
+                'I volunteered both in the field and in events under organizations such as Ipek Yolu Disaster Volunteers, KA154 Erasmus+, and the T3 Foundation.',
+                'These experiences strengthened my ability to create social impact beyond technical projects and build trust with stakeholders.'
+            ],
+            bulletIntro: 'Highlights:',
+            bullets: [
+                'I actively participated in field activities focused on disaster awareness and volunteer coordination.',
+                'Through Erasmus+, I gained teamwork and intercultural communication experience in international youth meetings.',
+                'I built experience in club management, sponsorship processes, stands, promotion, and institutional representation.',
+                'I contributed to awareness and education efforts through collaborations with Yesilay and AFAD.'
+            ],
+            captions: [
+                'A moment from volunteer work with Ipek Yolu Disaster Volunteers and civil society partners, reflecting my active role in disaster awareness and solidarity-focused events.',
+                'A field setting for disaster education and awareness sessions where I strengthened planning and coordination experience with participants.',
+                'An international youth meeting under KA154 Erasmus+, where I gained intercultural communication and project-based collaboration experience.',
+                'A workshop and group work setting within Erasmus+ where I improved responsibility sharing and presentation skills.',
+                'A networking and closing moment with international participants, reflecting the multilingual and multicultural side of youth work.',
+                'An event environment involving university club sponsorship and stakeholder communication, where I contributed to stage flow and partner visibility.',
+                'An information stand experience focused on visitor interaction, promotion, and content sharing.',
+                'A second stand setup focused on awareness and visibility through organized communication points.',
+                'A training moment from a Yesilay and AFAD camp covering disaster awareness, first aid, and addiction prevention.',
+                'A camp activity where teamwork and risk awareness were strengthened through volunteer discipline and trainer guidance.',
+                'A Yesilay information stand where I supported one-to-one visitor communication and awareness work.'
+            ]
+        }
+    };
+
     const openEventModal = (eventId) => {
-        const detail = eventDetails[eventId];
+        const isEnglish = window.i18n?.getLanguage?.() === 'en';
+        const baseDetail = eventDetails[eventId];
+        const translatedDetail = isEnglish ? eventDetailsEn[eventId] : null;
+        const detail = translatedDetail ? { ...baseDetail, ...translatedDetail } : baseDetail;
         if (!detail) return;
 
         const existing = document.getElementById('eventDetailModal');
@@ -377,7 +459,7 @@ function setupEventDetails() {
         modal.className = `event-modal-overlay event-modal-${eventId}`;
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', `${detail.title} detayları`);
+        modal.setAttribute('aria-label', isEnglish ? `${detail.title} details` : `${detail.title} detayları`);
 
         const noteItems = (detail.notes || []).map((item) => `<p>${item}</p>`).join('');
         const bulletBlock = Array.isArray(detail.bullets) && detail.bullets.length
@@ -388,16 +470,21 @@ function setupEventDetails() {
             if (typeof item === 'string') return { src: item, caption: '' };
             return { src: item.src, caption: item.caption || '' };
         });
+        if (isEnglish && Array.isArray(detail.captions)) {
+            normalizedMedia.forEach((item, index) => {
+                item.caption = detail.captions[index] || item.caption;
+            });
+        }
         const hasSlideCaptions = normalizedMedia.some((m) => m.caption);
         const firstCaption = normalizedMedia[0]?.caption || '';
         const multiSlide = normalizedMedia.length > 1;
         const navButtons = multiSlide ? `
-                <button type="button" class="event-slideshow-nav event-slideshow-prev" aria-label="Önceki görsel"><span aria-hidden="true">‹</span></button>
-                <button type="button" class="event-slideshow-nav event-slideshow-next" aria-label="Sonraki görsel"><span aria-hidden="true">›</span></button>
+                <button type="button" class="event-slideshow-nav event-slideshow-prev" aria-label="${isEnglish ? 'Previous image' : 'Önceki görsel'}"><span aria-hidden="true">‹</span></button>
+                <button type="button" class="event-slideshow-nav event-slideshow-next" aria-label="${isEnglish ? 'Next image' : 'Sonraki görsel'}"><span aria-hidden="true">›</span></button>
             ` : '';
         const mediaSlides = normalizedMedia.map((item, index) => `
             <div class="event-slide" data-slide-index="${index}" aria-hidden="${index === 0 ? 'false' : 'true'}">
-                <img src="${item.src}" alt="${detail.title} görsel ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                <img src="${item.src}" alt="${detail.title} ${isEnglish ? 'image' : 'görsel'} ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">
             </div>
         `).join('');
         const slideCaptionHtml = hasSlideCaptions
@@ -406,14 +493,14 @@ function setupEventDetails() {
 
         modal.innerHTML = `
             <div class="event-modal-box">
-                <button class="event-modal-close" id="eventModalCloseBtn" aria-label="Kapat">✕</button>
+                <button class="event-modal-close" id="eventModalCloseBtn" aria-label="${isEnglish ? 'Close' : 'Kapat'}">✕</button>
                 <div class="event-modal-header">
                     <span class="event-modal-period">${detail.period}</span>
                     <h3>${detail.title}</h3>
                     <p>${detail.summary}</p>
                 </div>
 
-                <div class="event-media-stream event-media-slideshow${multiSlide ? '' : ' is-single'}" aria-label="Etkinlik görsel sunumu" aria-live="polite">
+                <div class="event-media-stream event-media-slideshow${multiSlide ? '' : ' is-single'}" aria-label="${isEnglish ? 'Event image slideshow' : 'Etkinlik görsel sunumu'}" aria-live="polite">
                     <div class="event-slideshow-viewport">
                         <div class="event-slideshow-track">
                             ${mediaSlides}
@@ -424,7 +511,7 @@ function setupEventDetails() {
                 ${slideCaptionHtml}
 
                 <div class="event-info-flow">
-                    <h4>${detail.notesTitle || 'Bilgi Akışı'}</h4>
+                    <h4>${detail.notesTitle || (isEnglish ? 'Information Flow' : 'Bilgi Akışı')}</h4>
                     <div class="event-info-text">${noteItems}${bulletBlock}</div>
                 </div>
             </div>
@@ -517,7 +604,7 @@ function setupEventDetails() {
                 ? `<p class="event-lightbox-caption">${captionText}</p>`
                 : '';
             lightbox.innerHTML = `
-                <button class="event-image-lightbox-close" aria-label="Görseli kapat">✕</button>
+                <button class="event-image-lightbox-close" aria-label="${isEnglish ? 'Close image' : 'Görseli kapat'}">✕</button>
                 <div class="event-lightbox-inner">
                     <img src="${src}" alt="${alt}">
                     ${cap}
@@ -758,12 +845,16 @@ function setupRecommendationsCarousel() {
     
     if (!storySteps.length || !detailPage || !backBtn) return;
 
-    const titles = {
-        books: 'Kitaplar',
-        documentaries: 'Belgeseller & Animasyonlar',
-        animations: 'Animasyonlar',
-        'documentary-films': 'Belgeseller',
-        movies: 'Filmler'
+    const getRecommendationTitle = (id) => {
+        const titles = window.i18n?.t?.('recommendationsDetailTitles') || {
+            books: 'Kitaplar',
+            documentaries: 'Belgeseller & Animasyonlar',
+            animations: 'Animasyonlar',
+            'documentary-films': 'Belgeseller',
+            movies: 'Filmler',
+            default: 'Öneriler'
+        };
+        return titles[id] || titles.default;
     };
 
     let currentIndex = 0;
@@ -786,7 +877,7 @@ function setupRecommendationsCarousel() {
 
         currentIndex = 0;
         activeRecommendationId = recommendationId;
-        if (title) title.textContent = titles[recommendationId] || 'Öneriler';
+        if (title) title.textContent = getRecommendationTitle(recommendationId);
         openRecommendationsModal();
         if (isCategoryChoice) {
             updateCategoryChoice();
@@ -816,10 +907,12 @@ function setupRecommendationsCarousel() {
         modal.className = 'event-modal-overlay recommendations-modal-overlay';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', `${title?.textContent || 'Öneriler'} detayları`);
+        modal.setAttribute('aria-label', window.i18n?.getLanguage?.() === 'en'
+            ? `${title?.textContent || 'Recommendations'} details`
+            : `${title?.textContent || 'Öneriler'} detayları`);
         modal.innerHTML = `
             <div class="event-modal-box recommendations-modal-box">
-                <button class="event-modal-close recommendations-modal-close" id="recommendationsModalCloseBtn" aria-label="Kapat">✕</button>
+                <button class="event-modal-close recommendations-modal-close" id="recommendationsModalCloseBtn" aria-label="${window.i18n?.getLanguage?.() === 'en' ? 'Close' : 'Kapat'}">✕</button>
             </div>
         `;
 
@@ -867,13 +960,13 @@ function setupRecommendationsCarousel() {
 
     const updateBackButton = () => {
         if (activeRecommendationId === 'animations') {
-            backBtn.textContent = '← Belgesellere Göz At';
+            backBtn.textContent = window.i18n?.t?.('recBackDocumentaries') || '← Belgesellere Göz At';
             backBtn.dataset.targetRecommendation = 'documentary-films';
         } else if (activeRecommendationId === 'documentary-films') {
-            backBtn.textContent = '← Animasyonlara Göz At';
+            backBtn.textContent = window.i18n?.t?.('recBackAnimations') || '← Animasyonlara Göz At';
             backBtn.dataset.targetRecommendation = 'animations';
         } else {
-            backBtn.textContent = '← Önerilere Dön';
+            backBtn.textContent = window.i18n?.t?.('recBackDefault') || '← Önerilere Dön';
             delete backBtn.dataset.targetRecommendation;
         }
     };
@@ -954,25 +1047,6 @@ function setupDynamicAmbientTheme() {
 
     const now = new Date();
     applyTone(fromHour(now.getHours()));
-
-    if (!navigator.geolocation) return;
-
-    navigator.geolocation.getCurrentPosition(async (position) => {
-        try {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,is_day&timezone=auto`;
-            const response = await fetch(url);
-            if (!response.ok) return;
-            const weather = await response.json();
-            const isDay = weather?.current?.is_day === 1;
-            applyTone(isDay ? fromHour(new Date().getHours()) : 'ambient-night');
-        } catch (_error) {
-            // Sessiz geç: fallback zaten saat bazlı çalışıyor.
-        }
-    }, () => {
-        // Konum izni verilmezse saat bazlı fallback kullanılır.
-    }, { maximumAge: 300000, timeout: 4000 });
 }
 
 /* ──────────────────────────────────
