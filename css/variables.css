@@ -157,8 +157,8 @@
     --bg-dark: #ffffff;
     --bg-darker: #efe8dd;
     --bg-card: #f8f1ea;
-    --text-light: #d8a7ff;
-    --text-muted: #b982e2;
+    --text-light: #4A235A;
+    --text-muted: #4A235A;
     --text-dark: #e8e8e8;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
@@ -170,7 +170,7 @@
     --page-dot-color: #d8cdb8;
     --page-grid-line-color: rgba(111, 79, 132, 0.14);
     --header-bg: rgba(247, 241, 227, 0.92);
-    --header-fg: #d8a7ff;
+    --header-fg: #4A235A;
     --header-control-bg: rgba(111, 79, 132, 0.08);
     --header-control-border: rgba(111, 79, 132, 0.24);
     --ambient-tint: rgba(197, 107, 255, 0.08);

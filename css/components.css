@@ -914,25 +914,25 @@
 [data-theme='light'] .blog-card h3,
 [data-theme='light'] .card h3,
 [data-theme='light'] .card h4 {
-    color: #6f2494;
+    color: #4A235A;
 }
 
 [data-theme='light'] .project-excerpt,
 [data-theme='light'] .blog-card p,
 [data-theme='light'] .card p {
-    color: #54206b;
+    color: #4A235A;
 }
 
 [data-theme='light'] .badge,
 [data-theme='light'] .badge-personal,
 [data-theme='light'] .project-status-badge {
     background: rgba(118, 49, 150, 0.16);
-    color: #6f2494;
+    color: #4A235A;
     border-color: rgba(118, 49, 150, 0.34);
 }
 
 [data-theme='light'] .btn-detail {
-    color: #6f2494;
+    color: #4A235A;
     border-color: rgba(118, 49, 150, 0.42);
     background: rgba(255, 255, 255, 0.18);
 }
@@ -940,13 +940,13 @@
 [data-theme='light'] .skill-chip {
     border-color: rgba(197, 107, 255, 0.38);
     background: rgba(197, 107, 255, 0.11);
-    color: #3d2a4c;
+    color: #4A235A;
 }
 
 [data-theme='light'] .skill-chip:hover {
     background: rgba(197, 107, 255, 0.2);
     border-color: rgba(197, 107, 255, 0.6);
-    color: #2f2138;
+    color: #4A235A;
 }
 
 /* Link columns */

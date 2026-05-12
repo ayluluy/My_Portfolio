@@ -306,7 +306,7 @@ function setupEventDetails() {
             summary: 'İpek Yolu Afet Gönüllüleri, KA154 Erasmus+ ve T3 Vakfı kapsamında aktif katılım.',
             media: [
                 {
-                    src: './assets/images/ald_dernek.jpg',
+                    src: './assets/images/ald.jpg',
                     caption: 'İpek Yolu Afet Gönüllüleri ve sivil toplum iş birlikleri kapsamında dernek ortamında yürütülen gönüllü çalışmalardan bir kare; afet bilinci ve dayanışma temalı etkinliklerde aktif görev aldığım anları yansıtıyor.'
                 },
                 {
@@ -374,7 +374,7 @@ function setupEventDetails() {
 
         const modal = document.createElement('div');
         modal.id = 'eventDetailModal';
-        modal.className = 'event-modal-overlay';
+        modal.className = `event-modal-overlay event-modal-${eventId}`;
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
         modal.setAttribute('aria-label', `${detail.title} detayları`);

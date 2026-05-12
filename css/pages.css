@@ -604,13 +604,13 @@ body.ambient-night {
 }
 
 [data-theme='light'] .meta-label {
-    color: #7a21a6;
+    color: #4A235A;
 }
 
 [data-theme='light'] .meta-val,
 [data-theme='light'] .about-bio,
 [data-theme='light'] .skills-heading {
-    color: #54206b;
+    color: #4A235A;
 }
 
 .skills-heading {
@@ -797,7 +797,8 @@ body.ambient-night {
 .event-media-stream.event-media-slideshow {
     position: relative;
     width: 100%;
-    aspect-ratio: 1024 / 554;
+    height: min(68vh, 720px);
+    min-height: 460px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid rgba(197, 107, 255, 0.35);
@@ -827,14 +828,15 @@ body.ambient-night {
 .event-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.28);
     display: block;
     cursor: zoom-in;
     transition: transform var(--transition-base);
 }
 
 .event-slide img:hover {
-    transform: scale(1.03);
+    transform: none;
 }
 
 .event-slideshow-nav {
@@ -1267,11 +1269,11 @@ body.ambient-night {
 }
 
 [data-theme='light'] .medium-card h3 {
-    color: #6f2494;
+    color: #4A235A;
 }
 
 [data-theme='light'] .medium-card p {
-    color: #54206b;
+    color: #4A235A;
 }
 
 [data-theme='light'] .medium-read-link {
@@ -1452,11 +1454,11 @@ article h3 {
 }
 
 [data-theme='light'] .timeline-content h3 {
-    color: #6f2494;
+    color: #4A235A;
 }
 
 [data-theme='light'] .timeline-content p {
-    color: #5a236f;
+    color: #4A235A;
 }
 
 [data-theme='light'] .timeline-date,
@@ -1480,7 +1482,7 @@ article h3 {
 [data-theme='light'] .chip {
     background: rgba(197, 107, 255, 0.1);
     border-color: rgba(197, 107, 255, 0.34);
-    color: #493058;
+    color: #4A235A;
 }
 
 [data-theme='light'] .chip:hover {
@@ -1652,13 +1654,13 @@ article h3 {
 }
 
 [data-theme='light'] .rec-filter-btn {
-    color: #6b4c8a;
+    color: #4A235A;
     border-color: rgba(197, 107, 255, 0.3);
 }
 
 [data-theme='light'] .rec-filter-btn.active {
-    color: #7b2ff7;
-    border-color: #7b2ff7;
+    color: #4A235A;
+    border-color: #4A235A;
     background: rgba(123, 47, 247, 0.1);
 }
 
@@ -1747,11 +1749,11 @@ article h3 {
 
 [data-theme='light'] .story-step-clickable h3,
 [data-theme='light'] .story-step-clickable .story-year {
-    color: #7a21a6;
+    color: #4A235A;
 }
 
 [data-theme='light'] .story-step-clickable p {
-    color: #5a236f;
+    color: #4A235A;
 }
 
 .recommendations-detail-page {
@@ -2017,11 +2019,11 @@ article h3 {
 }
 
 [data-theme='light'] .recommendation-info h3 {
-    color: #2f2138;
+    color: #4A235A;
 }
 
 [data-theme='light'] .recommendation-description {
-    color: #5f4473;
+    color: #4A235A;
 }
 
 [data-theme='light'] .recommendation-visual {
