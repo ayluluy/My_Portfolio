@@ -8,13 +8,13 @@
     <meta property="og:title" content="Eylül Yılmaz">
     <meta property="og:description" content="Yönetim Bilişim Sistemleri öğrencisinin portfolyo ve blog sayfası.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://eylul-yilmaz.github.io/">
-    <meta property="og:image" content="https://eylul-yilmaz.github.io/assets/images/og-cover.png">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
     <meta property="og:locale" content="tr_TR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Eylül Yılmaz">
     <meta name="twitter:description" content="Portfolyo, projeler ve blog yazıları.">
-    <meta name="twitter:image" content="https://eylul-yilmaz.github.io/assets/images/og-cover.png">
+    <meta name="twitter:image" content="">
     <link rel="icon" type="image/png" href="./assets/images/icon3.png">
 
     
@@ -33,6 +33,14 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <title>Eylül Yılmaz — Portfolyo</title>
+    
+    <!-- Dynamic Meta Tags for Current Domain -->
+    <script>
+        const origin = window.location.origin;
+        document.querySelector('meta[property="og:url"]').setAttribute('content', origin + '/');
+        document.querySelector('meta[property="og:image"]').setAttribute('content', origin + '/assets/images/pixel.png');
+        document.querySelector('meta[name="twitter:image"]').setAttribute('content', origin + '/assets/images/pixel.png');
+    </script>
 </head>
 <body>
     <div class="cursor" aria-hidden="true"></div>
